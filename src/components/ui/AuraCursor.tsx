@@ -58,10 +58,10 @@ export const AuraCursor: React.FC = () => {
       if (interactive) {
         gsap.to(dot, {
           scale: 2.2,
-          borderColor: '#FF8A2B',
+          borderColor: '#C5A059',
           borderWidth: 1.5,
-          backgroundColor: 'rgba(255, 138, 43, 0.18)',
-          boxShadow: '0 0 15px rgba(255, 138, 43, 0.5)',
+          backgroundColor: 'rgba(197, 160, 89, 0.2)',
+          boxShadow: '0 0 16px rgba(229, 193, 88, 0.6)',
           duration: 0.25,
           ease: 'power2.out',
         });
@@ -82,10 +82,10 @@ export const AuraCursor: React.FC = () => {
       if (interactive) {
         gsap.to(dot, {
           scale: 1,
-          borderColor: 'rgba(255, 138, 43, 0.4)',
+          borderColor: 'rgba(197, 160, 89, 0.4)',
           borderWidth: 1,
-          backgroundColor: '#FF8A2B',
-          boxShadow: '0 0 8px rgba(255, 138, 43, 0.6)',
+          backgroundColor: '#C5A059',
+          boxShadow: '0 0 8px rgba(197, 160, 89, 0.5)',
           duration: 0.25,
           ease: 'power2.out',
         });
@@ -123,16 +123,16 @@ export const AuraCursor: React.FC = () => {
         aria-hidden="true"
         className="fixed top-0 left-0 w-[280px] h-[280px] -ml-[140px] -mt-[140px] pointer-events-none z-30 gpu-accelerated rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 138, 43, 0.12) 0%, rgba(123, 44, 191, 0.04) 50%, transparent 70%)',
-          filter: 'blur(12px)',
+          background: 'radial-gradient(circle, rgba(197, 160, 89, 0.12) 0%, rgba(59, 28, 87, 0.04) 50%, transparent 70%)',
+          filter: 'blur(14px)',
         }}
       />
 
-      {/* Crisp 8px Center Dot with Amber Glow */}
+      {/* Crisp 8px Center Dot with Burnished Gold Glow */}
       <div
         ref={dotRef}
         aria-hidden="true"
-        className="fixed top-0 left-0 w-[8px] h-[8px] -ml-[4px] -mt-[4px] pointer-events-none z-50 gpu-accelerated rounded-full border border-pumpkin/40 bg-pumpkin shadow-[0_0_8px_rgba(255,138,43,0.6)]"
+        className="fixed top-0 left-0 w-[8px] h-[8px] -ml-[4px] -mt-[4px] pointer-events-none z-50 gpu-accelerated rounded-full border border-gold/40 bg-gold shadow-[0_0_8px_rgba(197,160,89,0.6)]"
       />
     </>
   );

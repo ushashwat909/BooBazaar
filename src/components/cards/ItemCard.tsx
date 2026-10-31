@@ -9,8 +9,7 @@ import {
   ArrowRightLeft,
   Scroll,
   Handshake,
-  Skull,
-  Flame,
+  Clock,
 } from 'lucide-react';
 import { Magnetic } from '../ui/Magnetic';
 import { CobwebCorner } from '../spooky/SpookyElements';
@@ -43,28 +42,24 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
 
-    // Relative offset (-0.5 to 0.5)
     const x = mouseX / rect.width - 0.5;
     const y = mouseY / rect.height - 0.5;
 
-    // Update CSS custom variables dynamically for radial spotlight border
     cardRef.current.style.setProperty('--mouse-x', `${mouseX}px`);
     cardRef.current.style.setProperty('--mouse-y', `${mouseY}px`);
 
-    // Animate 3D tilt
     gsap.to(cardRef.current, {
-      rotateY: x * 14,
-      rotateX: -y * 14,
+      rotateY: x * 12,
+      rotateX: -y * 12,
       scale: 1.02,
       duration: 0.3,
       ease: 'power2.out',
       transformPerspective: 1000,
     });
 
-    // Animate inner elements (image and badges) with deeper translation for layered depth
     if (imageRef.current) {
       gsap.to(imageRef.current, {
-        z: 25,
+        z: 22,
         duration: 0.3,
         ease: 'power2.out',
       });
@@ -72,7 +67,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
 
     if (badgesRef.current) {
       gsap.to(badgesRef.current, {
-        z: 35,
+        z: 32,
         duration: 0.3,
         ease: 'power2.out',
       });
@@ -82,7 +77,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
   const handleMouseLeave = () => {
     if (!cardRef.current) return;
 
-    // Reset smoothly with elastic physics
     gsap.to(cardRef.current, {
       rotateX: 0,
       rotateY: 0,
@@ -115,26 +109,26 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     switch (type) {
       case 'Available':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-potion-emerald/20 text-potion-emerald border border-potion-emerald/40 shadow-sm flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-cinzel font-bold uppercase tracking-wider bg-potion-emerald/20 text-potion-emerald border border-potion-emerald/40 shadow-sm flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-potion-emerald animate-pulse" />
             <span>Available</span>
           </span>
         );
       case 'Donation':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-pumpkin/20 text-pumpkin border border-pumpkin/40 shadow-sm flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-cinzel font-bold uppercase tracking-wider bg-gold/20 text-gold-bright border border-gold/40 shadow-sm flex items-center gap-1">
             <Gift className="w-2.5 h-2.5" /> Free Offering
           </span>
         );
       case 'Exchange':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-coven/30 text-coven-light border border-coven/50 shadow-sm flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-cinzel font-bold uppercase tracking-wider bg-coven/30 text-coven-light border border-coven/50 shadow-sm flex items-center gap-1">
             <ArrowRightLeft className="w-2.5 h-2.5" /> Barter Swap
           </span>
         );
       case 'Wanted':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-cinzel font-bold uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm flex items-center gap-1">
             <Scroll className="w-2.5 h-2.5" /> Seeking Spell
           </span>
         );
@@ -151,50 +145,49 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* 3D Tilting Card with Radial Border Glare */}
+      {/* 3D Tilting Card with Burnished Gold Border Glare Inspired by City of the Dead */}
       <div
         ref={cardRef}
         className={`interactive-card group relative h-full rounded-3xl p-[1px] will-change-transform transition-shadow duration-300 ${
           isWanted
             ? 'hover:shadow-coven-glow'
-            : 'hover:shadow-potion-glow'
+            : 'hover:shadow-gold-glow'
         }`}
         style={{
           transformStyle: 'preserve-3d',
           background: `radial-gradient(400px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), ${
-            isWanted ? 'rgba(123, 44, 191, 0.45)' : 'rgba(255, 138, 43, 0.35)'
-          }, transparent 40%), rgba(255, 145, 48, 0.12)`,
+            isWanted ? 'rgba(123, 44, 191, 0.45)' : 'rgba(197, 160, 89, 0.45)'
+          }, transparent 42%), rgba(197, 160, 89, 0.16)`,
         }}
       >
-        {/* Inner Card Surface */}
+        {/* Inner Card Stone Surface */}
         <div
           className="relative rounded-[23px] bg-obsidian-card w-full h-full flex flex-col justify-between overflow-hidden"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {/* Top Image Container with Layered 3D Depth */}
+          {/* Top Image Container Styled Like Tour Experience Photography */}
           <div
             ref={imageRef}
             className="relative aspect-[16/10] w-full overflow-hidden bg-obsidian-dark will-change-transform"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            {/* Spooky Cobweb in corner */}
-            <CobwebCorner position="top-right" size={48} />
+            <CobwebCorner position="top-right" size={44} />
 
             <img
               src={item.image_url}
               alt={item.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 group-hover:brightness-100"
               loading="lazy"
             />
 
-            {/* Gradient bottom overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-card via-transparent to-black/40 pointer-events-none" />
+            {/* Gradient bottom overlay for seamless contrast */}
+            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-card via-obsidian-card/25 to-black/40 pointer-events-none" />
 
-            {/* Heart Favorite Button */}
+            {/* Favorite Heart Button */}
             <Magnetic strength={0.6} className="absolute top-3.5 right-3.5 z-20">
               <button
                 onClick={(e) => onToggleFavorite(item.id, e)}
-                className="w-8 h-8 rounded-full bg-obsidian/85 backdrop-blur-md border border-white/10 flex items-center justify-center text-cream hover:scale-110 active:scale-95 transition-all shadow-md"
+                className="w-8 h-8 rounded-full bg-obsidian-dark/85 backdrop-blur-md border border-gold-subtle flex items-center justify-center text-cream hover:text-gold hover:border-gold transition-all shadow-md"
                 title={isFav ? 'Saved to your relics' : 'Save relic'}
               >
                 <Heart
@@ -205,36 +198,36 @@ export const ItemCard: React.FC<ItemCardProps> = ({
               </button>
             </Magnetic>
 
-            {/* Top-Left Category & Status Pills with Layered Z-Depth */}
+            {/* Badges Row */}
             <div
               ref={badgesRef}
               className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-1.5 z-20 will-change-transform"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-obsidian/90 backdrop-blur-md text-lavender-muted border border-white/15 shadow-sm">
+              <span className="px-2.5 py-1 rounded-full text-[9px] font-cinzel font-bold uppercase tracking-wider bg-obsidian-dark/95 backdrop-blur-md text-gold border border-gold/30 shadow-sm">
                 {item.category}
               </span>
               {renderListingTypePill(item.listing_type)}
             </div>
           </div>
 
-          {/* Card Body */}
+          {/* Card Body & Provenance Details */}
           <div className="p-5 flex-1 flex flex-col justify-between">
             <div>
-              {/* Location and Spooky Condition Line */}
+              {/* Location & Condition Line */}
               <div className="flex items-center justify-between text-xs mb-2">
-                <span className="inline-flex items-center gap-1 text-pumpkin font-semibold">
-                  <MapPin className="w-3.5 h-3.5" />
+                <span className="inline-flex items-center gap-1 text-gold font-medium font-cinzel">
+                  <MapPin className="w-3.5 h-3.5 text-gold" />
                   {item.hostel_block}
                 </span>
-                <span className="text-[11px] text-lavender-muted font-medium px-2 py-0.5 rounded-md bg-white/5 border border-white/5 flex items-center gap-1">
-                  <Flame className="w-2.5 h-2.5 text-pumpkin" />
+                <span className="text-[10px] font-medium text-lavender-muted px-2 py-0.5 rounded-md bg-white/5 border border-white/5 flex items-center gap-1">
+                  <Clock className="w-2.5 h-2.5 text-gold" />
                   <span>{item.condition}</span>
                 </span>
               </div>
 
               {/* Title */}
-              <h3 className="font-editorial text-xl font-bold text-cream group-hover:text-pumpkin transition-colors mb-2 line-clamp-1">
+              <h3 className="font-cinzel text-lg sm:text-xl font-bold text-cream group-hover:text-gold transition-colors mb-2 line-clamp-1">
                 {item.title}
               </h3>
 
@@ -243,26 +236,26 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 {item.description}
               </p>
 
-              {/* Expected Return / Barter Term */}
+              {/* Barter Exchange Terms Box */}
               {item.expected_return && (
                 <div
                   className={`p-2.5 rounded-xl border flex items-start gap-2 text-xs mb-4 ${
                     isWanted
                       ? 'bg-coven/15 border-coven/30'
-                      : 'bg-obsidian-surface border-pumpkin/15'
+                      : 'bg-obsidian-surface border-gold/15'
                   }`}
                 >
                   <Tag
                     className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${
-                      isWanted ? 'text-coven-light' : 'text-potion-emerald'
+                      isWanted ? 'text-coven-light' : 'text-gold'
                     }`}
                   />
                   <span className="text-[11px] text-cream/90 font-medium line-clamp-1">
                     <strong
                       className={
                         isWanted
-                          ? 'text-coven-light font-semibold'
-                          : 'text-potion-emerald font-semibold'
+                          ? 'text-coven-light font-cinzel font-semibold'
+                          : 'text-gold font-cinzel font-semibold'
                       }
                     >
                       {isWanted ? 'Offering: ' : 'Wants: '}
@@ -273,22 +266,22 @@ export const ItemCard: React.FC<ItemCardProps> = ({
               )}
             </div>
 
-            {/* Card Footer: Action Button */}
+            {/* Action Button Styled Like Tour Reservation Button */}
             {isWanted ? (
               <button
                 onClick={() => onItemChat(item)}
-                className="w-full py-2.5 rounded-xl bg-coven/20 border border-coven/40 text-cream group-hover:bg-coven group-hover:text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl bg-coven/20 border border-coven/40 text-cream group-hover:bg-coven group-hover:text-white font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
               >
                 <Handshake className="w-3.5 h-3.5 text-coven-light group-hover:text-white transition-colors" />
-                <span>🤝 I Have This / Claim Karma</span>
+                <span>🤝 Fulfill Spell / Claim Karma</span>
               </button>
             ) : (
               <button
                 onClick={() => onItemChat(item)}
-                className="w-full py-2.5 rounded-xl bg-coven/15 border border-coven/30 text-cream group-hover:bg-pumpkin group-hover:text-obsidian-dark group-hover:border-pumpkin font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 rounded-xl bg-obsidian-surface border border-gold/30 text-cream group-hover:bg-gradient-to-r group-hover:from-gold group-hover:to-gold-dark group-hover:text-obsidian-dark group-hover:border-gold font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
               >
-                <MessageSquare className="w-3.5 h-3.5 text-coven-light group-hover:text-obsidian-dark transition-colors" />
-                <span>💬 Bargain with Owner</span>
+                <MessageSquare className="w-3.5 h-3.5 text-gold group-hover:text-obsidian-dark transition-colors" />
+                <span>💬 Book Barter / Chat with Owner</span>
               </button>
             )}
           </div>

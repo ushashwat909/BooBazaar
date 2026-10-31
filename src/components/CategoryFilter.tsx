@@ -8,7 +8,6 @@ import {
   Package,
   Gift,
   Check,
-  Skull,
 } from 'lucide-react';
 import { Magnetic } from './ui/Magnetic';
 import { CobwebCorner } from './spooky/SpookyElements';
@@ -22,6 +21,7 @@ interface CategoryFilterProps {
 
 export const CATEGORIES: {
   id: ItemCategory;
+  roman: string;
   label: string;
   sublabel: string;
   icon: React.ElementType;
@@ -30,6 +30,7 @@ export const CATEGORIES: {
 }[] = [
   {
     id: 'Spell Books',
+    roman: 'I',
     label: 'Cursed Textbooks',
     sublabel: 'Notes & Lab Manuals',
     icon: BookOpen,
@@ -38,14 +39,16 @@ export const CATEGORIES: {
   },
   {
     id: 'Magic Tools',
+    roman: 'II',
     label: 'Engineering Relics',
     sublabel: 'Drafters & Casio Calcs',
     icon: PenTool,
-    gradient: 'from-pumpkin/25 to-obsidian-surface',
-    iconColor: 'text-pumpkin',
+    gradient: 'from-gold/25 to-obsidian-surface',
+    iconColor: 'text-gold',
   },
   {
     id: 'Room Charms',
+    roman: 'III',
     label: 'Midnight Charms',
     sublabel: 'Study Lamps & Blankets',
     icon: Flame,
@@ -54,14 +57,16 @@ export const CATEGORIES: {
   },
   {
     id: 'Enchanted Tech',
+    roman: 'IV',
     label: 'Banned Dorm Tech',
-    sublabel: 'Kettles, Audio & Chargers',
+    sublabel: 'Kettles, Audio & Cables',
     icon: Cpu,
     gradient: 'from-blue-500/25 to-obsidian-surface',
     iconColor: 'text-blue-400',
   },
   {
     id: 'Dorm Treasures',
+    roman: 'V',
     label: 'Hostel Furniture',
     sublabel: 'Chairs, Trunks & Hangers',
     icon: Package,
@@ -70,8 +75,9 @@ export const CATEGORIES: {
   },
   {
     id: 'Free Potions',
+    roman: 'VI',
     label: 'Ghost Offerings',
-    sublabel: '100% Free Hostel Loot',
+    sublabel: '100% Free Campus Loot',
     icon: Gift,
     gradient: 'from-rose-500/25 to-obsidian-surface',
     iconColor: 'text-rose-400',
@@ -138,40 +144,44 @@ const CategoryCardItem: React.FC<CategoryCardItemProps> = ({
         onMouseLeave={handleMouseLeave}
         className={`interactive-card group relative w-full h-full text-left p-[1px] rounded-2xl transition-shadow duration-300 flex flex-col justify-between overflow-hidden will-change-transform ${
           isSelected
-            ? 'shadow-potion-glow'
-            : 'hover:shadow-potion-glow/50'
+            ? 'shadow-gold-glow border border-gold/70'
+            : 'border border-gold-subtle hover:shadow-gold-glow/40 hover:border-gold/40'
         }`}
         style={{
           transformStyle: 'preserve-3d',
           background: `radial-gradient(300px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), ${
-            isSelected ? 'rgba(255, 138, 43, 0.5)' : 'rgba(255, 138, 43, 0.35)'
-          }, transparent 45%), rgba(255, 145, 48, 0.12)`,
+            isSelected ? 'rgba(197, 160, 89, 0.45)' : 'rgba(197, 160, 89, 0.28)'
+          }, transparent 45%), rgba(197, 160, 89, 0.08)`,
         }}
       >
         <div
-          className={`relative rounded-[15px] p-3.5 sm:p-4 w-full h-full flex flex-col justify-between overflow-hidden transition-colors ${
+          className={`relative rounded-[15px] p-4 w-full h-full flex flex-col justify-between overflow-hidden transition-colors ${
             isSelected
-              ? 'bg-gradient-to-br from-pumpkin/20 via-obsidian-surface to-coven/20'
+              ? 'bg-gradient-to-br from-gold/20 via-obsidian-surface to-coven/20'
               : 'bg-obsidian-card group-hover:bg-obsidian-cardHover'
           }`}
           style={{ transformStyle: 'preserve-3d' }}
         >
           {isSelected && <CobwebCorner position="top-right" size={36} />}
 
-          {/* Active checkmark */}
-          {isSelected && (
-            <span className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-pumpkin text-obsidian flex items-center justify-center text-[10px] font-bold shadow-sm z-10">
-              <Check className="w-2.5 h-2.5 stroke-[3]" />
+          {/* Top Row: Roman numeral & Count */}
+          <div className="flex items-center justify-between w-full mb-3">
+            <span className="font-cinzel text-xs font-bold text-gold/80 tracking-widest">
+              {cat.roman}
             </span>
-          )}
+
+            <span className="text-[10px] font-cinzel font-semibold px-2 py-0.5 rounded-full bg-white/5 text-gold border border-gold/20">
+              {count} {count === 1 ? 'Relic' : 'Relics'}
+            </span>
+          </div>
 
           {/* Icon Container with Magnetic touch */}
           <div className="flex items-center justify-between w-full mb-3">
             <Magnetic strength={0.5}>
               <div
-                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
+                className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm ${
                   isSelected
-                    ? 'bg-pumpkin text-obsidian shadow-sm'
+                    ? 'bg-gradient-to-br from-gold to-gold-dark text-obsidian-dark font-bold'
                     : 'bg-white/5 ' + cat.iconColor
                 }`}
               >
@@ -179,18 +189,20 @@ const CategoryCardItem: React.FC<CategoryCardItemProps> = ({
               </div>
             </Magnetic>
 
-            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/5 text-lavender-muted border border-white/5">
-              {count} {count === 1 ? 'relic' : 'relics'}
-            </span>
+            {isSelected && (
+              <span className="w-4 h-4 rounded-full bg-gold text-obsidian-dark flex items-center justify-center text-[10px] font-bold shadow-sm">
+                <Check className="w-2.5 h-2.5 stroke-[3]" />
+              </span>
+            )}
           </div>
 
           {/* Text */}
           <div>
             <p
-              className={`text-xs sm:text-sm font-bold tracking-tight transition-colors ${
+              className={`text-xs sm:text-sm font-cinzel font-bold tracking-wide transition-colors ${
                 isSelected
                   ? 'text-cream'
-                  : 'text-cream group-hover:text-pumpkin'
+                  : 'text-cream group-hover:text-gold'
               }`}
             >
               {cat.label}
@@ -213,19 +225,22 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          <Skull className="w-4 h-4 text-pumpkin" />
-          <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-lavender-muted">
-            The Six Apothecary Shelves
+        <div className="flex items-center gap-2.5">
+          <span className="text-gold font-cinzel font-bold text-sm">✦</span>
+          <h2 className="text-xs uppercase tracking-[0.25em] font-cinzel font-bold text-gold">
+            The Archival Categories
           </h2>
+          <span className="hidden sm:inline text-xs text-lavender-muted font-normal">
+            — Six Curated Shelves of Campus Essentials
+          </span>
         </div>
 
         {selectedCategory !== 'All' && (
           <button
             onClick={() => onSelectCategory('All')}
-            className="text-xs font-semibold text-pumpkin hover:underline flex items-center gap-1"
+            className="text-xs font-cinzel font-bold text-gold hover:underline flex items-center gap-1 uppercase tracking-wider"
           >
-            Clear Filter (Show All Shelves)
+            Clear Filter (Show All)
           </button>
         )}
       </div>

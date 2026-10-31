@@ -4,13 +4,14 @@
 
 @layer base {
   body {
-    background-color: #0B0813;
-    color: #FFF8F0;
+    background-color: #090610;
+    color: #F7F3EE;
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
-  h1, h2, h3, .font-editorial {
-    font-family: 'Playfair Display', serif;
+  h1, h2, h3, .font-editorial, .font-cinzel {
+    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -27,7 +28,11 @@
   transform-style: preserve-3d;
 }
 
-/* Subtle glowing apothecary effects without clutter */
+/* Atmospheric Glow & Hairline Borders Inspired by City of the Dead */
+.glow-gold {
+  box-shadow: 0 0 25px -4px rgba(197, 160, 89, 0.35);
+}
+
 .glow-pumpkin {
   box-shadow: 0 0 20px -3px rgba(255, 138, 43, 0.35);
 }
@@ -41,11 +46,21 @@
 }
 
 .card-border-subtle {
-  border: 1px solid rgba(255, 145, 48, 0.16);
+  border: 1px solid rgba(197, 160, 89, 0.18);
+}
+
+.card-border-gold {
+  border: 1px solid rgba(197, 160, 89, 0.32);
 }
 
 .card-border-coven {
   border: 1px solid rgba(123, 44, 191, 0.28);
+}
+
+/* Hairline Antique Ornamental Divider */
+.gold-hairline {
+  background: linear-gradient(90deg, transparent 0%, rgba(197, 160, 89, 0.45) 50%, transparent 100%);
+  height: 1px;
 }
 
 /* Custom Scrollbar */
@@ -53,12 +68,12 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0813;
+  background: #090610;
 }
 ::-webkit-scrollbar-thumb {
   background: #251B38;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #FF8A2B;
+  background: #C5A059;
 }

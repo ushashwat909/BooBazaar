@@ -139,16 +139,15 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
       id: `item-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
       owner_id: currentUser.id,
       title: title.trim(),
-      description: description.trim() || (listingMode === 'request' ? 'Wanted by student.' : 'Available in pantry.'),
+      description: description.trim() || `Hostel essential item bartered by ${currentUser.full_name}.`,
       category,
       listing_type: listingType,
-      condition,
-      expected_return: expectedReturn.trim() || (listingType === 'Donation' ? 'Free Donation' : 'Open to barter'),
-      hostel_block: currentUser.hostel_block,
-      image_url: imageUrl || PRESET_DEMO_PHOTOS[0].url,
       status: 'Open',
+      image_url: imageUrl,
+      condition,
+      expected_return: expectedReturn.trim() || 'Open for barter / swap',
+      hostel_block: currentUser.hostel_block,
       created_at: new Date().toISOString(),
-      owner: currentUser,
     };
 
     onItemAdded(newItem);
@@ -157,11 +156,14 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-dark/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-obsidian-dark/90 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-obsidian-card border border-pumpkin/30 shadow-2xl p-6 sm:p-8"
+        className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-obsidian-card border border-gold/30 shadow-2xl p-6 sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
+        {/* Subtle Gold / Ambient Glow */}
+        <div className="absolute top-0 right-1/4 w-48 h-48 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
+
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -171,51 +173,52 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-coven to-pumpkin border border-pumpkin/30 flex items-center justify-center shadow-potion-glow shrink-0">
+        <div className="flex items-center gap-3.5 mb-6">
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-coven via-obsidian to-gold-dark border border-gold/40 flex items-center justify-center shadow-gold-glow shrink-0">
             {listingMode === 'offer' ? (
-              <Sparkles className="w-6 h-6 text-obsidian-dark fill-obsidian-dark" />
+              <Sparkles className="w-6 h-6 text-gold fill-gold" />
             ) : (
-              <Scroll className="w-6 h-6 text-obsidian-dark" />
+              <Scroll className="w-6 h-6 text-gold" />
             )}
           </div>
           <div>
-            <h2 className="font-editorial text-2xl font-bold text-cream">
-              {listingMode === 'offer' ? 'Brew a Listing (Offer Item)' : 'Cast a Seeking Spell (Request Item)'}
+            <span className="text-[10px] font-cinzel tracking-widest text-gold uppercase block">Archival Vault Ledger</span>
+            <h2 className="font-cinzel text-xl sm:text-2xl font-bold tracking-wide text-cream">
+              {listingMode === 'offer' ? 'Inscribe a Relic (Offer Item)' : 'Cast a Seeking Charter (Request Item)'}
             </h2>
-            <p className="text-xs text-lavender-muted">
+            <p className="text-xs text-lavender-muted mt-0.5">
               {listingMode === 'offer'
-                ? 'Place an item onto your hostel wing pantry shelf'
+                ? 'Place an item into your hostel archival vault'
                 : 'Broadcast an item you need to students across your campus wing'}
             </p>
           </div>
         </div>
 
         {/* Top Mode Toggle: Offer vs Request */}
-        <div className="grid grid-cols-2 p-1 rounded-2xl bg-obsidian-surface border border-pumpkin/20 mb-6">
+        <div className="grid grid-cols-2 p-1 rounded-2xl bg-obsidian-surface border border-gold/20 mb-6">
           <button
             type="button"
             onClick={() => setListingMode('offer')}
-            className={`py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+            className={`py-2.5 text-xs font-cinzel font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
               listingMode === 'offer'
-                ? 'bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark shadow-potion-glow'
+                ? 'bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian shadow-gold-glow'
                 : 'text-lavender-muted hover:text-cream'
             }`}
           >
             <Flame className="w-3.5 h-3.5" />
-            <span>Offer an Item (Pantry Shelf)</span>
+            <span>Offer a Relic (Vault Shelf)</span>
           </button>
           <button
             type="button"
             onClick={() => setListingMode('request')}
-            className={`py-2.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+            className={`py-2.5 text-xs font-cinzel font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
               listingMode === 'request'
-                ? 'bg-gradient-to-r from-coven to-coven-light text-cream shadow-coven-glow'
+                ? 'bg-coven border border-gold/40 text-gold-bright shadow-coven-glow'
                 : 'text-lavender-muted hover:text-cream'
             }`}
           >
             <Scroll className="w-3.5 h-3.5" />
-            <span>Request an Item (Seeking Spells)</span>
+            <span>Request a Relic (Seeking Charter)</span>
           </button>
         </div>
 
@@ -227,16 +230,19 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
 
         {/* Auto-filled User Identity Bar */}
         {currentUser && (
-          <div className="mb-5 p-3 rounded-2xl bg-obsidian-surface border border-white/5 flex items-center justify-between text-xs">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-lg bg-pumpkin/20 text-pumpkin flex items-center justify-center font-bold text-[10px]">
+          <div className="mb-5 p-3 rounded-2xl bg-obsidian-surface border border-gold/20 flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-gold/15 text-gold border border-gold/30 flex items-center justify-center font-cinzel font-bold text-xs">
                 {currentUser.full_name[0]}
               </div>
-              <span className="font-semibold text-cream">{currentUser.full_name}</span>
+              <div>
+                <span className="font-semibold text-cream block">{currentUser.full_name}</span>
+                <span className="text-[10px] text-gold font-cinzel">Verified Campus Inscriber</span>
+              </div>
             </div>
             <div className="flex items-center gap-2 text-lavender-muted text-[11px]">
-              <span className="text-potion-emerald font-semibold flex items-center gap-1">
-                <MapPin className="w-3 h-3" />
+              <span className="text-gold-bright font-semibold flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-gold" />
                 {currentUser.hostel_block} • Room {currentUser.room_number}
               </span>
               <span>• Roll: {currentUser.roll_number}</span>
@@ -248,15 +254,15 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
           
           {/* Item Title */}
           <div>
-            <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
-              {listingMode === 'offer' ? 'Item Title *' : 'What Item Are You Seeking? *'}
+            <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
+              {listingMode === 'offer' ? 'Relic Title *' : 'What Relic Are You Seeking? *'}
             </label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={listingMode === 'offer' ? "e.g. Casio fx-991EX Calculator or Electric Kettle 1.5L" : "e.g. Mini-Drafter with clips for ED exam"}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-pumpkin focus:ring-1 focus:ring-pumpkin"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"
               required
             />
           </div>
@@ -264,13 +270,13 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
           {/* Category & Listing Type */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
-                Category
+              <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
+                Archival Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as ItemCategory)}
-                className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream focus:outline-none focus:border-pumpkin cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream focus:outline-none focus:border-gold cursor-pointer"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c.id} value={c.id}>{c.label}</option>
@@ -279,23 +285,23 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
+              <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
                 Listing Type
               </label>
               {listingMode === 'request' ? (
-                <div className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-coven/30 text-xs text-coven-light font-bold flex items-center gap-1.5">
-                  <Scroll className="w-3.5 h-3.5" />
-                  <span>Seeking Spell (Wanted)</span>
+                <div className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-gold/30 text-xs text-gold-bright font-bold flex items-center gap-1.5">
+                  <Scroll className="w-3.5 h-3.5 text-gold" />
+                  <span>Seeking Charter (Wanted)</span>
                 </div>
               ) : (
                 <select
                   value={listingType}
                   onChange={(e) => setListingType(e.target.value as ListingType)}
-                  className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream focus:outline-none focus:border-pumpkin cursor-pointer"
+                  className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream focus:outline-none focus:border-gold cursor-pointer"
                 >
-                  <option value="Available">Available (Direct Claim)</option>
-                  <option value="Exchange">Exchange (Barter / Swap)</option>
-                  <option value="Donation">Donation (100% Free)</option>
+                  <option value="Available">Available (Direct Barter / Claim)</option>
+                  <option value="Exchange">Exchange (Item-for-Item Swap)</option>
+                  <option value="Donation">Donation (100% Free Hostel Gift)</option>
                 </select>
               )}
             </div>
@@ -304,24 +310,24 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
           {/* Condition & Expected Return */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
+              <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
                 Condition
               </label>
               <select
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream focus:outline-none focus:border-pumpkin cursor-pointer"
+                className="w-full px-3 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream focus:outline-none focus:border-gold cursor-pointer"
               >
-                <option value="Like New">Like New</option>
+                <option value="Like New">Like New (Immaculate)</option>
                 <option value="Good condition">Good condition</option>
                 <option value="Fully working">Fully working</option>
-                <option value="2nd Year">2nd Year / Used</option>
+                <option value="2nd Year">2nd Year / Battle-tested</option>
                 <option value="Any condition">Any condition (For Wanted)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
+              <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
                 {listingMode === 'offer' ? 'What do you want in return?' : 'What can you offer in exchange?'}
               </label>
               <input
@@ -329,7 +335,7 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                 value={expectedReturn}
                 onChange={(e) => setExpectedReturn(e.target.value)}
                 placeholder="e.g. Swap for Drafter, ₹150, or 3 Maggi packs"
-                className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-pumpkin"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-gold"
               />
             </div>
           </div>
@@ -337,15 +343,15 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
           {/* Photo Upload Dropzone & Preset Selector */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-xs font-semibold text-lavender-muted">
-                Item Photo (Dropzone & 4 Fast Presets)
+              <label className="text-xs font-cinzel font-semibold tracking-wider text-lavender-muted uppercase">
+                Relic Imagery (Presets or Upload)
               </label>
               <div className="flex items-center gap-1.5 text-[10px]">
                 <button
                   type="button"
                   onClick={() => setUploadMethod('preset')}
-                  className={`px-2 py-0.5 rounded-md font-semibold ${
-                    uploadMethod === 'preset' ? 'bg-pumpkin text-obsidian-dark' : 'text-lavender-muted hover:text-cream'
+                  className={`px-2 py-0.5 rounded-md font-semibold transition-colors ${
+                    uploadMethod === 'preset' ? 'bg-gold text-obsidian font-bold' : 'text-lavender-muted hover:text-cream'
                   }`}
                 >
                   4 Presets
@@ -353,8 +359,8 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setUploadMethod('upload')}
-                  className={`px-2 py-0.5 rounded-md font-semibold ${
-                    uploadMethod === 'upload' ? 'bg-pumpkin text-obsidian-dark' : 'text-lavender-muted hover:text-cream'
+                  className={`px-2 py-0.5 rounded-md font-semibold transition-colors ${
+                    uploadMethod === 'upload' ? 'bg-gold text-obsidian font-bold' : 'text-lavender-muted hover:text-cream'
                   }`}
                 >
                   Upload File
@@ -362,8 +368,8 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                 <button
                   type="button"
                   onClick={() => setUploadMethod('url')}
-                  className={`px-2 py-0.5 rounded-md font-semibold ${
-                    uploadMethod === 'url' ? 'bg-pumpkin text-obsidian-dark' : 'text-lavender-muted hover:text-cream'
+                  className={`px-2 py-0.5 rounded-md font-semibold transition-colors ${
+                    uploadMethod === 'url' ? 'bg-gold text-obsidian font-bold' : 'text-lavender-muted hover:text-cream'
                   }`}
                 >
                   URL
@@ -384,16 +390,16 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                     }}
                     className={`relative rounded-xl overflow-hidden aspect-[4/3] border-2 transition-all ${
                       imageUrl === p.url
-                        ? 'border-pumpkin scale-105 shadow-potion-glow'
-                        : 'border-transparent opacity-65 hover:opacity-100'
+                        ? 'border-gold scale-105 shadow-gold-glow'
+                        : 'border-white/10 opacity-65 hover:opacity-100 hover:border-gold/40'
                     }`}
                   >
                     <img src={p.url} alt={p.label} className="w-full h-full object-cover" />
-                    <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[9px] text-center text-white truncate py-0.5">
+                    <span className="absolute bottom-0 inset-x-0 bg-black/80 font-cinzel text-[9px] text-center text-gold-bright truncate py-0.5">
                       {p.label}
                     </span>
                     {imageUrl === p.url && (
-                      <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-pumpkin text-obsidian flex items-center justify-center">
+                      <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-gold text-obsidian flex items-center justify-center">
                         <Check className="w-2.5 h-2.5 stroke-[3]" />
                       </span>
                     )}
@@ -406,7 +412,7 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
             {uploadMethod === 'upload' && (
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-pumpkin/30 hover:border-pumpkin rounded-2xl p-4 text-center cursor-pointer bg-obsidian-surface/60 hover:bg-obsidian-surface transition-all flex flex-col items-center justify-center space-y-2 mb-2"
+                className="border-2 border-dashed border-gold/30 hover:border-gold rounded-2xl p-4 text-center cursor-pointer bg-obsidian-surface/60 hover:bg-obsidian-surface transition-all flex flex-col items-center justify-center space-y-2 mb-2"
               >
                 <input
                   ref={fileInputRef}
@@ -415,7 +421,7 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                   onChange={handleFileChange}
                   className="hidden"
                 />
-                <div className="w-10 h-10 rounded-xl bg-pumpkin/15 text-pumpkin flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl bg-gold/15 text-gold border border-gold/30 flex items-center justify-center">
                   {isUploading ? (
                     <Loader2 className="w-5 h-5 animate-spin" />
                   ) : (
@@ -427,7 +433,7 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                     {uploadedFileName ? `Selected: ${uploadedFileName}` : 'Click to select or drag photo here'}
                   </p>
                   <p className="text-[10px] text-lavender-muted">
-                    Uploads directly to Supabase Storage (`item-photos` bucket)
+                    Directly encrypted and vaulted in Supabase Storage (`item-photos` bucket)
                   </p>
                 </div>
               </div>
@@ -441,20 +447,20 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3 py-2 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream focus:outline-none focus:border-pumpkin"
+                  className="w-full px-3 py-2 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream focus:outline-none focus:border-gold"
                 />
               </div>
             )}
 
             {/* Live Image Preview Thumbnail */}
             {imageUrl && (
-              <div className="flex items-center gap-3 p-2 rounded-xl bg-obsidian-surface/60 border border-white/5">
-                <img src={imageUrl} alt="Preview" className="w-12 h-10 object-cover rounded-lg border border-pumpkin/30" />
+              <div className="flex items-center gap-3 p-2 rounded-xl bg-obsidian-surface/60 border border-gold/20">
+                <img src={imageUrl} alt="Preview" className="w-12 h-10 object-cover rounded-lg border border-gold/40" />
                 <span className="text-[11px] text-lavender-muted truncate flex-1">
                   Active Photo: <strong className="text-cream">{imageUrl.substring(0, 42)}...</strong>
                 </span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-potion-emerald/15 text-potion-emerald font-semibold">
-                  Ready
+                <span className="text-[10px] px-2 py-0.5 rounded bg-gold/15 text-gold border border-gold/30 font-semibold font-cinzel">
+                  Inscribed
                 </span>
               </div>
             )}
@@ -462,15 +468,15 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-lavender-muted mb-1.5">
-              Additional Details / Description
+            <label className="block text-xs font-cinzel font-semibold tracking-wider text-lavender-muted mb-1.5 uppercase">
+              Archival Notes & Provenance
             </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={2}
-              placeholder="Mention hostel room pickup timing, working condition, or negotiable trade options..."
-              className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-pumpkin"
+              placeholder="Mention hostel room pickup timing, working condition, or negotiable barter options..."
+              className="w-full px-3.5 py-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-gold transition-colors"
             />
           </div>
 
@@ -478,22 +484,22 @@ export const BrewListingModal: React.FC<BrewListingModalProps> = ({
           <button
             type="submit"
             disabled={isSubmitting || isUploading}
-            className={`w-full py-3 rounded-xl font-bold text-xs uppercase tracking-wider shadow-potion-glow transition-all flex items-center justify-center gap-2 ${
+            className={`w-full py-3.5 rounded-xl font-cinzel font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 ${
               listingMode === 'offer'
-                ? 'bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark hover:scale-[1.01]'
-                : 'bg-gradient-to-r from-coven to-coven-light text-cream shadow-coven-glow hover:scale-[1.01]'
+                ? 'bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian shadow-gold-glow hover:scale-[1.01]'
+                : 'bg-coven border border-gold/50 text-gold-bright shadow-coven-glow hover:scale-[1.01]'
             }`}
           >
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Brewing into Supabase...</span>
+                <span>Inscribing into Supabase Vault...</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4 fill-current" />
                 <span>
-                  {listingMode === 'offer' ? 'Publish to Hostel Pantry' : 'Post Seeking Spell'}
+                  {listingMode === 'offer' ? 'Publish to Hostel Archival Vault' : 'Cast Seeking Charter'}
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </>

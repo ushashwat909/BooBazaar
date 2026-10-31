@@ -9,23 +9,34 @@ export default {
     extend: {
       colors: {
         obsidian: {
-          DEFAULT: '#0B0813',
-          dark: '#07050C',
-          surface: '#151022',
-          card: '#151022',
-          cardHover: '#1B152B',
-          glass: 'rgba(21, 16, 34, 0.75)',
+          DEFAULT: '#090610',
+          dark: '#05030A',
+          surface: '#120D1D',
+          card: '#140E20',
+          cardHover: '#1B132B',
+          glass: 'rgba(18, 13, 29, 0.85)',
+        },
+        gold: {
+          light: '#F3E5AB',
+          DEFAULT: '#C5A059',
+          bright: '#E5C158',
+          dark: '#8C6D37',
+          glow: 'rgba(197, 160, 89, 0.28)',
+        },
+        bronze: {
+          DEFAULT: '#A77044',
+          dark: '#684323',
         },
         pumpkin: {
           light: '#FFA654',
           DEFAULT: '#FF8A2B',
-          dark: '#E06B0F',
+          dark: '#D97706',
           glow: 'rgba(255, 138, 43, 0.25)',
         },
         coven: {
           light: '#9D4EDD',
           DEFAULT: '#7B2CBF',
-          dark: '#5A189A',
+          dark: '#481373',
           glow: 'rgba(123, 44, 191, 0.25)',
         },
         potion: {
@@ -35,24 +46,28 @@ export default {
           rose: '#EF476F',
         },
         cream: {
-          DEFAULT: '#FFF8F0',
-          muted: '#EAE1D8',
+          DEFAULT: '#F7F3EE',
+          muted: '#E5DFD6',
         },
         lavender: {
-          muted: '#A39BB5',
-          subtle: '#6A637C',
+          muted: '#A59DB6',
+          subtle: '#6A627B',
         }
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Cinzel', 'Georgia', 'serif'],
+        serif: ['"Cinzel"', '"Playfair Display"', 'Georgia', 'serif'],
+        cinzel: ['"Cinzel"', 'serif'],
+        editorial: ['"Cinzel"', '"Playfair Display"', 'serif'],
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
+        'gold-glow': '0 0 25px -4px rgba(197, 160, 89, 0.35)',
         'potion-glow': '0 0 25px -5px rgba(255, 138, 43, 0.3)',
         'coven-glow': '0 0 25px -5px rgba(123, 44, 191, 0.35)',
         'emerald-glow': '0 0 20px -5px rgba(46, 196, 182, 0.4)',
       },
       borderColor: {
+        'gold-subtle': 'rgba(197, 160, 89, 0.22)',
         'potion-subtle': 'rgba(255, 145, 48, 0.16)',
         'coven-subtle': 'rgba(123, 44, 191, 0.25)',
       }
@@ -60,4 +75,3 @@ export default {
   },
   plugins: [],
 }
-

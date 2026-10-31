@@ -48,9 +48,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-obsidian/90 backdrop-blur-md border-b border-pumpkin/15 transition-all">
+    <header className="sticky top-0 z-40 w-full bg-obsidian-dark/95 backdrop-blur-md border-b border-gold-subtle transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Left: Brand Identity */}
+        {/* Left: Prestigious Brand Identity Inspired by City of the Dead */}
         <Magnetic strength={0.4}>
           <a
             href="#home"
@@ -59,16 +59,16 @@ export const Navbar: React.FC<NavbarProps> = ({
               setActiveTab('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-3.5 group cursor-pointer"
+            className="flex items-center gap-3.5 group cursor-pointer select-none"
           >
-            {/* Glowing Potion Flask Icon */}
-            <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-coven/40 via-obsidian-surface to-pumpkin/20 border border-pumpkin/30 shadow-potion-glow group-hover:scale-105 transition-transform duration-300">
+            {/* Antique Crest Flask Medallion */}
+            <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-obsidian-surface via-obsidian-card to-coven/30 border border-gold/40 shadow-gold-glow group-hover:border-gold transition-colors duration-300">
               <svg
-                className="w-6 h-6 text-pumpkin group-hover:rotate-12 transition-transform duration-300"
+                className="w-6 h-6 text-gold group-hover:scale-105 transition-transform duration-300"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="1.8"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -79,39 +79,37 @@ export const Navbar: React.FC<NavbarProps> = ({
                   y1="14"
                   x2="16"
                   y2="14"
-                  stroke="#2EC4B6"
-                  strokeWidth="2.5"
+                  stroke="#C5A059"
+                  strokeWidth="2"
                 />
                 <circle cx="10" cy="17" r="1" fill="#2EC4B6" />
-                <circle cx="14" cy="18" r="1.2" fill="#FF8A2B" />
+                <circle cx="14" cy="18" r="1.2" fill="#E5C158" />
               </svg>
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-potion-emerald animate-pulse" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-potion-emerald ring-2 ring-obsidian-dark animate-pulse" />
             </div>
 
             <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="font-editorial text-2xl font-bold tracking-wide text-cream group-hover:text-pumpkin transition-colors">
-                  Potion Pantry
-                </span>
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.25em] font-semibold text-lavender-muted">
-                Haunted Hostel Essentials
+              <span className="font-cinzel text-xl sm:text-2xl font-bold tracking-[0.08em] text-cream group-hover:text-gold transition-colors">
+                POTION PANTRY
+              </span>
+              <span className="text-[9px] uppercase tracking-[0.3em] font-semibold text-gold/80">
+                Circular Campus Relic Exchange
               </span>
             </div>
           </a>
         </Magnetic>
 
-        {/* Center: Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        {/* Center: Editorial Navigation Links */}
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2 text-xs font-semibold uppercase tracking-wider">
           <button
             onClick={() => {
               setActiveTab('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`px-3.5 py-2 rounded-lg transition-all ${
               activeTab === 'home'
-                ? 'text-pumpkin bg-pumpkin/10 font-semibold'
-                : 'text-cream/80 hover:text-cream hover:bg-obsidian-surface'
+                ? 'text-gold bg-gold/10 font-bold border-b border-gold/40'
+                : 'text-cream/80 hover:text-gold hover:bg-white/5'
             }`}
           >
             Home
@@ -120,27 +118,27 @@ export const Navbar: React.FC<NavbarProps> = ({
           <a
             href="#explore"
             onClick={() => setActiveTab('explore')}
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-all ${
+            className={`px-3.5 py-2 rounded-lg flex items-center gap-1.5 transition-all ${
               activeTab === 'explore'
-                ? 'text-pumpkin bg-pumpkin/10 font-semibold'
-                : 'text-cream/80 hover:text-cream hover:bg-obsidian-surface'
+                ? 'text-gold bg-gold/10 font-bold border-b border-gold/40'
+                : 'text-cream/80 hover:text-gold hover:bg-white/5'
             }`}
           >
-            <Compass className="w-4 h-4 text-lavender-muted" />
-            Explore
+            <Compass className="w-3.5 h-3.5 text-gold/80" />
+            <span>Relics Feed</span>
           </a>
 
           <button
             onClick={onSeekingSpellsClick}
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 transition-all ${
+            className={`px-3.5 py-2 rounded-lg flex items-center gap-1.5 transition-all ${
               activeTab === 'seeking'
-                ? 'text-coven-light bg-coven/15 font-semibold'
-                : 'text-cream/80 hover:text-coven-light hover:bg-coven/10'
+                ? 'text-coven-light bg-coven/15 font-bold border-b border-coven/40'
+                : 'text-cream/80 hover:text-coven-light hover:bg-white/5'
             }`}
           >
-            <Scroll className="w-4 h-4 text-coven-light" />
-            Seeking Spells
-            <span className="px-1.5 py-0.5 text-[10px] uppercase font-bold bg-coven/30 text-coven-light rounded-full border border-coven/40">
+            <Scroll className="w-3.5 h-3.5 text-coven-light" />
+            <span>Seeking Spells</span>
+            <span className="px-1.5 py-0.5 text-[9px] font-bold bg-coven/30 text-coven-light rounded-full border border-coven/40">
               Wanted
             </span>
           </button>
@@ -148,51 +146,51 @@ export const Navbar: React.FC<NavbarProps> = ({
           {onOpenOuija && (
             <button
               onClick={onOpenOuija}
-              className="px-3 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 text-pumpkin hover:bg-pumpkin/10 transition-all"
+              className="px-3 py-2 rounded-lg flex items-center gap-1.5 text-gold hover:text-gold-bright hover:bg-gold/10 transition-all font-medium"
             >
-              <Dices className="w-4 h-4 text-pumpkin" />
-              <span>Ouija Oracle</span>
+              <Dices className="w-3.5 h-3.5 text-gold" />
+              <span>Spirit Oracle</span>
             </button>
           )}
 
           <Magnetic strength={0.8}>
             <button
               onClick={onPostClick}
-              className="px-3.5 py-2 rounded-lg text-sm font-medium flex items-center gap-1.5 text-potion-emerald hover:bg-potion-emerald/10 transition-all"
+              className="px-3.5 py-2 rounded-lg flex items-center gap-1.5 text-potion-emerald hover:bg-potion-emerald/10 transition-all font-bold"
             >
-              <PlusCircle className="w-4 h-4" />
-              Brew a Listing
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>Brew a Listing</span>
             </button>
           </Magnetic>
 
           <a
             href="#how-it-works"
-            className="px-3.5 py-2 rounded-lg text-sm font-medium text-cream/80 hover:text-cream hover:bg-obsidian-surface transition-all flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-lg text-cream/70 hover:text-cream hover:bg-white/5 transition-all flex items-center gap-1.5"
           >
-            <HelpCircle className="w-4 h-4 text-lavender-muted" />
-            How It Works
+            <HelpCircle className="w-3.5 h-3.5 text-lavender-muted" />
+            <span>Explainer</span>
           </a>
         </nav>
 
-        {/* Right: Actions & Auth State */}
+        {/* Right: Actions & Reservation / Auth State */}
         <div className="flex items-center gap-2.5">
-          {/* Haunted Ambience Audio Toggle */}
+          {/* Haunted Ambience Procedural Sound Toggle */}
           <Magnetic strength={0.6}>
             <button
               onClick={toggleHauntedSound}
               className={`p-2.5 rounded-xl border transition-all ${
                 isAudioPlaying
-                  ? 'bg-pumpkin/20 border-pumpkin text-pumpkin shadow-potion-glow'
-                  : 'bg-obsidian-surface border-white/10 text-lavender-muted hover:text-cream'
+                  ? 'bg-gold/20 border-gold text-gold shadow-gold-glow'
+                  : 'bg-obsidian-surface border-gold-subtle text-lavender-muted hover:text-gold'
               }`}
               title={
                 isAudioPlaying
-                  ? 'Mute Haunted Wind Ambience'
-                  : 'Play Haunted Hostel Ambience (Procedural)'
+                  ? 'Mute Haunted Vault Ambience'
+                  : 'Play Haunted Vault Ambience (Procedural)'
               }
             >
               {isAudioPlaying ? (
-                <Volume2 className="w-4 h-4 text-pumpkin animate-pulse" />
+                <Volume2 className="w-4 h-4 text-gold animate-pulse" />
               ) : (
                 <VolumeX className="w-4 h-4" />
               )}
@@ -203,8 +201,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           <Magnetic strength={0.6}>
             <button
               onClick={onSearchClick}
-              className="p-2.5 rounded-xl bg-obsidian-surface border border-pumpkin/15 text-cream/70 hover:text-pumpkin hover:border-pumpkin/40 hover:bg-obsidian-cardHover transition-all"
-              title="Search relics and items"
+              className="p-2.5 rounded-xl bg-obsidian-surface border border-gold-subtle text-cream/80 hover:text-gold hover:border-gold/40 hover:bg-obsidian-cardHover transition-all"
+              title="Search catalog of relics"
             >
               <Search className="w-4 h-4" />
             </button>
@@ -221,7 +219,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-coven-light" />
                   <span>Active Chats</span>
-                  <span className="w-4 h-4 rounded-full bg-pumpkin text-obsidian font-bold text-[10px] flex items-center justify-center">
+                  <span className="w-4 h-4 rounded-full bg-gold text-obsidian-dark font-bold text-[10px] flex items-center justify-center">
                     2
                   </span>
                 </button>
@@ -231,14 +229,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="relative">
                 <button
                   onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  className="flex items-center gap-2.5 pl-2 pr-3 py-1.5 rounded-xl bg-obsidian-surface border border-pumpkin/25 hover:border-pumpkin/50 transition-all text-left group"
+                  className="flex items-center gap-2.5 pl-2 pr-3 py-1.5 rounded-xl bg-obsidian-surface border border-gold-subtle hover:border-gold/50 transition-all text-left group"
                 >
-                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-coven to-pumpkin flex items-center justify-center text-xs font-bold text-white shadow-sm">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-coven to-gold flex items-center justify-center text-xs font-bold text-white shadow-sm">
                     {currentUser.full_name[0]}
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center gap-1">
-                      <span className="text-xs font-semibold text-cream group-hover:text-pumpkin transition-colors">
+                      <span className="text-xs font-semibold text-cream group-hover:text-gold transition-colors">
                         {currentUser.full_name.split(' ')[0]}
                       </span>
                       <ShieldCheck className="w-3 h-3 text-potion-emerald" />
@@ -251,9 +249,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 {/* Dropdown Menu */}
                 {profileDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-obsidian-surface border border-pumpkin/20 shadow-2xl p-2 z-50 backdrop-blur-xl">
+                  <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-obsidian-surface border border-gold/30 shadow-2xl p-2 z-50 backdrop-blur-xl">
                     <div className="px-3 py-2 border-b border-white/10 mb-1">
-                      <p className="text-xs font-bold text-cream">
+                      <p className="text-xs font-bold text-cream font-cinzel">
                         {currentUser.full_name}
                       </p>
                       <p className="text-[11px] text-lavender-muted">
@@ -263,7 +261,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         <span className="text-potion-emerald font-semibold">
                           Karma Points
                         </span>
-                        <span className="font-bold text-pumpkin">
+                        <span className="font-bold text-gold">
                           {currentUser.karma_points} 🔮
                         </span>
                       </div>
@@ -281,7 +279,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     >
                       <span>Aarav (Block B • 204)</span>
                       {currentUser.username === 'aarav' && (
-                        <span className="text-pumpkin text-xs">✓</span>
+                        <span className="text-gold text-xs">✓</span>
                       )}
                     </button>
                     <button
@@ -293,7 +291,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     >
                       <span>Meera (Block C • 112)</span>
                       {currentUser.username === 'meera' && (
-                        <span className="text-pumpkin text-xs">✓</span>
+                        <span className="text-gold text-xs">✓</span>
                       )}
                     </button>
 
@@ -317,13 +315,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => openAuthModal('signin')}
-                className="px-3.5 py-2 rounded-xl text-xs font-bold text-cream hover:text-pumpkin transition-colors"
+                className="px-3.5 py-2 rounded-xl text-xs font-bold text-cream hover:text-gold transition-colors font-cinzel tracking-wider"
               >
                 Sign In
               </button>
               <button
                 onClick={() => openAuthModal('signup')}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark font-extrabold text-xs uppercase tracking-wider shadow-potion-glow hover:scale-105 transition-all"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian-dark font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow hover:scale-105 active:scale-95 transition-all"
               >
                 Join Coven
               </button>
@@ -333,7 +331,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile Menu Hamburger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl bg-obsidian-surface border border-pumpkin/15 text-cream hover:text-pumpkin"
+            className="md:hidden p-2 rounded-xl bg-obsidian-surface border border-gold-subtle text-cream hover:text-gold"
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -346,13 +344,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Slide-down Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden px-4 pt-2 pb-6 bg-obsidian-card border-b border-pumpkin/20 space-y-2">
+        <div className="md:hidden px-4 pt-2 pb-6 bg-obsidian-card border-b border-gold-subtle space-y-2">
           <button
             onClick={() => {
               setActiveTab('home');
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-cream hover:bg-white/5"
+            className="w-full text-left px-3 py-2 rounded-lg text-sm text-cream hover:bg-white/5 font-cinzel"
           >
             Home
           </button>
@@ -363,7 +361,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }}
             className="w-full text-left px-3 py-2 rounded-lg text-sm text-cream hover:bg-white/5"
           >
-            Explore
+            Relics Feed
           </button>
           <button
             onClick={() => {
@@ -380,10 +378,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 onOpenOuija();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded-lg text-sm text-pumpkin hover:bg-white/5 flex items-center gap-2"
+              className="w-full text-left px-3 py-2 rounded-lg text-sm text-gold hover:bg-white/5 flex items-center gap-2"
             >
               <Dices className="w-4 h-4" />
-              <span>Ouija Oracle Game</span>
+              <span>Spirit Oracle</span>
             </button>
           )}
           <button
@@ -391,7 +389,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               onPostClick();
               setMobileMenuOpen(false);
             }}
-            className="w-full text-left px-3 py-2 rounded-lg text-sm text-potion-emerald hover:bg-white/5"
+            className="w-full text-left px-3 py-2 rounded-lg text-sm text-potion-emerald hover:bg-white/5 font-semibold"
           >
             Brew a Listing
           </button>

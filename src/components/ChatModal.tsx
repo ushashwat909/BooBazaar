@@ -83,7 +83,7 @@ const QuickBargainChipItem: React.FC<QuickBargainChipItemProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      className="drawer-element px-2.5 py-1 rounded-xl bg-obsidian-dark border border-pumpkin/20 hover:border-pumpkin text-xs font-semibold text-cream hover:text-pumpkin shrink-0 transition-colors shadow-sm select-none will-change-transform"
+      className="drawer-element px-2.5 py-1 rounded-xl bg-obsidian-dark border border-gold/25 hover:border-gold text-xs font-semibold text-cream hover:text-gold shrink-0 transition-colors shadow-sm select-none will-change-transform"
     >
       {label}
     </button>
@@ -609,40 +609,40 @@ export const ChatModal: React.FC<ChatModalProps> = ({
       <div
         ref={drawerRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-xl h-full bg-obsidian-card border-l border-pumpkin/30 shadow-2xl flex flex-col justify-between overflow-hidden will-change-transform"
+        className="relative w-full max-w-xl h-full bg-obsidian-card border-l border-gold/30 shadow-2xl flex flex-col justify-between overflow-hidden will-change-transform"
       >
-        {/* Glow Effects */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-pumpkin/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Subtle Gold / Ambient Glow */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-coven/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* TOP HEADER */}
-        <div className="drawer-element p-4 sm:p-5 bg-obsidian-surface border-b border-pumpkin/20 relative z-10 space-y-3">
+        <div className="drawer-element p-4 sm:p-5 bg-obsidian-surface border-b border-gold/20 relative z-10 space-y-3">
           <div className="flex items-center justify-between">
             {/* Student & Verification Badge */}
             <div className="flex items-center gap-3">
               <div
                 ref={avatarRef}
-                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-coven to-pumpkin flex items-center justify-center font-bold text-white text-sm shadow-potion-glow will-change-transform"
+                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-coven via-obsidian to-gold-dark border border-gold/40 flex items-center justify-center font-cinzel font-bold text-gold text-sm shadow-gold-glow will-change-transform"
               >
                 {otherUser.full_name[0]}
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <h3 className="text-sm font-bold text-cream">
+                  <h3 className="text-sm font-cinzel font-bold tracking-wide text-cream">
                     {otherUser.full_name}
                   </h3>
-                  <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-potion-emerald/15 text-potion-emerald border border-potion-emerald/30 text-[10px] font-bold">
-                    <ShieldCheck className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-gold/15 text-gold border border-gold/30 text-[10px] font-bold">
+                    <ShieldCheck className="w-3 h-3 text-gold" />
                     Verified
                   </span>
                 </div>
                 <p className="text-[11px] text-lavender-muted flex items-center gap-1 mt-0.5">
-                  <MapPin className="w-3 h-3 text-pumpkin" />
+                  <MapPin className="w-3 h-3 text-gold" />
                   <span>
                     {otherUser.hostel_block}, Room {otherUser.room_number}
                   </span>
                   <span className="text-white/20">•</span>
-                  <span className="text-pumpkin font-semibold">
+                  <span className="text-gold font-semibold">
                     {otherUser.karma_points} Karma
                   </span>
                 </p>
@@ -673,14 +673,14 @@ export const ChatModal: React.FC<ChatModalProps> = ({
               {/* Floating "+50 Potion Points" Badge */}
               <div
                 ref={potionBadgeRef}
-                className="absolute -top-3 left-1/2 -translate-x-1/2 pointer-events-none opacity-0 z-40 whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-pumpkin via-potion-gold to-pumpkin-light text-obsidian-dark font-extrabold text-xs shadow-potion-glow flex items-center gap-1 border border-white/20 will-change-transform"
+                className="absolute -top-3 left-1/2 -translate-x-1/2 pointer-events-none opacity-0 z-40 whitespace-nowrap px-3 py-1 rounded-full bg-gradient-to-r from-gold via-gold-bright to-gold text-obsidian font-cinzel font-bold text-xs shadow-gold-glow flex items-center gap-1 border border-gold-bright/40 will-change-transform"
               >
-                <Sparkles className="w-3.5 h-3.5 fill-obsidian-dark" />
+                <Sparkles className="w-3.5 h-3.5 fill-obsidian" />
                 <span>+50 Potion Points</span>
               </div>
 
               {dealSealed ? (
-                <span className="px-3 py-1.5 rounded-xl bg-potion-emerald/15 text-potion-emerald border border-potion-emerald/30 text-xs font-bold flex items-center gap-1.5">
+                <span className="px-3 py-1.5 rounded-xl bg-gold/15 text-gold border border-gold/40 text-xs font-cinzel font-bold flex items-center gap-1.5">
                   <Check className="w-3.5 h-3.5 stroke-[3]" />
                   <span>Deal Sealed</span>
                 </span>
@@ -688,10 +688,10 @@ export const ChatModal: React.FC<ChatModalProps> = ({
                 <button
                   ref={sealButtonRef}
                   onClick={handleSealDeal}
-                  className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-pumpkin to-pumpkin-dark hover:scale-105 active:scale-95 text-obsidian-dark font-extrabold text-xs uppercase tracking-wider shadow-potion-glow transition-all flex items-center gap-1.5 relative overflow-hidden"
+                  className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-gold via-gold-bright to-gold-dark hover:scale-105 active:scale-95 text-obsidian font-cinzel font-bold text-xs uppercase tracking-wider shadow-gold-glow transition-all flex items-center gap-1.5 relative overflow-hidden"
                   title="Mark this item as exchanged and award +50 Potion Points!"
                 >
-                  <Sparkles className="w-3.5 h-3.5 fill-obsidian-dark" />
+                  <Sparkles className="w-3.5 h-3.5 fill-obsidian" />
                   <span>Mark Exchanged</span>
                 </button>
               )}
@@ -706,30 +706,30 @@ export const ChatModal: React.FC<ChatModalProps> = ({
             </div>
           </div>
 
-          {/* Active Item Context Strip (Target Card with subtle shake on deal) */}
+          {/* Active Item Context Strip */}
           {activeItem && (
             <div
               ref={itemCardBannerRef}
-              className="drawer-element p-3 rounded-2xl bg-obsidian-dark/70 border border-white/5 flex items-center justify-between gap-3 will-change-transform"
+              className="drawer-element p-3 rounded-2xl bg-obsidian-dark/80 border border-gold/20 flex items-center justify-between gap-3 will-change-transform"
             >
               <div className="flex items-center gap-3 overflow-hidden">
                 <img
                   src={activeItem.image_url}
                   alt={activeItem.title}
-                  className="w-12 h-12 rounded-xl object-cover border border-pumpkin/30 shrink-0"
+                  className="w-12 h-12 rounded-xl object-cover border border-gold/30 shrink-0"
                 />
                 <div className="truncate">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-cream truncate">
+                    <span className="text-xs font-cinzel font-bold text-cream truncate">
                       {activeItem.title}
                     </span>
-                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-pumpkin/15 text-pumpkin border border-pumpkin/30 shrink-0">
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider bg-gold/15 text-gold border border-gold/30 shrink-0">
                       {activeItem.listing_type}
                     </span>
                   </div>
                   <p className="text-[11px] text-lavender-muted truncate mt-0.5">
                     Wants:{' '}
-                    <strong className="text-potion-emerald">
+                    <strong className="text-gold-bright">
                       {activeItem.expected_return || 'Open to barter'}
                     </strong>
                   </p>
@@ -740,7 +740,7 @@ export const ChatModal: React.FC<ChatModalProps> = ({
                 <span
                   className={`text-[10px] font-bold px-2 py-1 rounded-lg ${
                     dealSealed
-                      ? 'bg-potion-emerald/20 text-potion-emerald'
+                      ? 'bg-gold/20 text-gold border border-gold/30'
                       : 'bg-coven/20 text-coven-light border border-coven/30'
                   }`}
                 >
@@ -802,8 +802,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
                 <div
                   className={`max-w-[85%] rounded-2xl p-3.5 text-xs shadow-md ${
                     isMe
-                      ? 'bg-gradient-to-r from-pumpkin via-pumpkin to-pumpkin-dark text-obsidian-dark font-medium rounded-br-none shadow-potion-glow'
-                      : 'bg-[#1F1730] border border-coven/30 text-cream rounded-bl-none'
+                      ? 'bg-gradient-to-r from-gold via-gold-bright to-gold text-obsidian font-semibold rounded-br-none shadow-gold-glow'
+                      : 'bg-[#18151D] border border-gold/20 text-cream rounded-bl-none'
                   }`}
                 >
                   {m.offer_tag && (
@@ -811,8 +811,8 @@ export const ChatModal: React.FC<ChatModalProps> = ({
                       <span
                         className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-wider ${
                           isMe
-                            ? 'bg-obsidian-dark/25 text-obsidian-dark'
-                            : 'bg-coven/40 text-coven-light border border-coven/50'
+                            ? 'bg-obsidian/25 text-obsidian'
+                            : 'bg-gold/15 text-gold border border-gold/30'
                         }`}
                       >
                         <Tag className="w-2.5 h-2.5" />
@@ -835,10 +835,10 @@ export const ChatModal: React.FC<ChatModalProps> = ({
         </div>
 
         {/* BOTTOM CONTROLS */}
-        <div className="drawer-element p-3 sm:p-4 bg-obsidian-surface border-t border-pumpkin/20 space-y-3 relative z-10">
+        <div className="drawer-element p-3 sm:p-4 bg-obsidian-surface border-t border-gold/20 space-y-3 relative z-10">
           {/* Quick-Bargain Chips with Interactive Hover & Ripple Physics */}
           <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-            <span className="text-[10px] font-bold text-lavender-muted uppercase tracking-wider shrink-0 mr-1 select-none">
+            <span className="text-[10px] font-cinzel font-bold text-gold uppercase tracking-wider shrink-0 mr-1 select-none">
               Quick Bargain:
             </span>
             {QUICK_BARGAIN_CHIPS.map((chip, idx) => (
@@ -864,15 +864,15 @@ export const ChatModal: React.FC<ChatModalProps> = ({
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               placeholder="Type your barter offer (e.g. 2 Maggi packs or Sem 4 notes)..."
-              className="flex-1 px-4 py-2.5 rounded-2xl bg-obsidian-dark border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-pumpkin focus:ring-1 focus:ring-pumpkin transition-all"
+              className="flex-1 px-4 py-2.5 rounded-2xl bg-obsidian-dark border border-gold-subtle text-xs text-cream placeholder-lavender-muted/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
             />
             <button
               type="submit"
               disabled={!inputText.trim()}
-              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 font-bold text-xs uppercase tracking-wider shadow-potion-glow transition-all flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100 font-cinzel font-bold text-xs uppercase tracking-wider shadow-gold-glow transition-all flex items-center gap-1.5"
             >
               <span>Send</span>
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5 stroke-[2.5]" />
             </button>
           </form>
         </div>

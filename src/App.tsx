@@ -227,8 +227,8 @@ const MainApp: React.FC = () => {
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark font-bold text-xs shadow-potion-glow border border-pumpkin-light flex items-center gap-2 animate-in slide-in-from-bottom duration-300">
-          <Flame className="w-4 h-4 fill-obsidian-dark" />
+        <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian font-cinzel font-bold text-xs shadow-gold-glow border border-gold-bright/40 flex items-center gap-2 animate-in slide-in-from-bottom duration-300">
+          <Flame className="w-4 h-4 fill-obsidian stroke-obsidian" />
           <span>{toastMessage}</span>
         </div>
       )}

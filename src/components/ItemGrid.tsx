@@ -235,40 +235,40 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-5">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <Skull className="w-3.5 h-3.5 text-pumpkin" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-lavender-muted">
-              Live Haunted Wing Inventory
+            <span className="text-gold font-bold text-xs font-cinzel">✦</span>
+            <span className="text-xs font-bold uppercase tracking-[0.25em] font-cinzel text-gold">
+              ARCHIVAL VAULT INVENTORY
             </span>
           </div>
-          <h2 className="font-editorial text-3xl sm:text-4xl font-extrabold text-cream">
+          <h2 className="font-cinzel text-3xl sm:text-4xl font-extrabold text-cream tracking-tight">
             {selectedFeedTab === 'treasures'
-              ? 'Recently Discovered Relics'
+              ? 'Catalog of Relics'
               : 'Seeking Spells (Wanted Board)'}
           </h2>
           <p className="text-xs sm:text-sm text-lavender-muted mt-1">
             {selectedFeedTab === 'treasures'
-              ? `${filteredItems.length} relics ready for immediate room barter across campus blocks`
-              : `${filteredItems.length} active requests from students seeking essentials in your wing`}
+              ? `${filteredItems.length} verified relics ready for immediate room barter across campus wings`
+              : `${filteredItems.length} active inquiries from students seeking essentials in your wing`}
           </p>
         </div>
 
         {/* Tab Switch: Treasures vs Seeking Spells */}
-        <div className="p-1 rounded-2xl bg-obsidian-surface border border-pumpkin/20 flex items-center shrink-0">
+        <div className="p-1 rounded-2xl bg-obsidian-surface border border-gold-subtle flex items-center shrink-0">
           <Magnetic strength={0.4}>
             <button
               onClick={() => onSelectFeedTab('treasures')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-cinzel font-bold tracking-wider uppercase flex items-center gap-2 transition-all ${
                 selectedFeedTab === 'treasures'
-                  ? 'bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark shadow-potion-glow'
-                  : 'text-lavender-muted hover:text-cream'
+                  ? 'bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian-dark shadow-gold-glow'
+                  : 'text-lavender-muted hover:text-gold'
               }`}
             >
               <Package className="w-3.5 h-3.5" />
-              <span>Pantry Relics</span>
+              <span>Vault Relics</span>
               <span
                 className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
                   selectedFeedTab === 'treasures'
-                    ? 'bg-obsidian-dark text-pumpkin'
+                    ? 'bg-obsidian-dark text-gold'
                     : 'bg-white/10 text-cream'
                 }`}
               >
@@ -280,7 +280,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
           <Magnetic strength={0.4}>
             <button
               onClick={() => onSelectFeedTab('seeking')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-cinzel font-bold tracking-wider uppercase flex items-center gap-2 transition-all ${
                 selectedFeedTab === 'seeking'
                   ? 'bg-gradient-to-r from-coven to-coven-light text-cream shadow-coven-glow'
                   : 'text-lavender-muted hover:text-cream'
@@ -303,29 +303,29 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
       </div>
 
       {/* Spectral Radar Banner */}
-      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-coven/20 via-obsidian-surface to-pumpkin/15 border border-pumpkin/20 mb-4 text-xs">
+      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-obsidian-surface via-obsidian-card to-coven/20 border border-gold-subtle mb-4 text-xs">
         <div className="flex items-center gap-2.5">
           <span className="w-2.5 h-2.5 rounded-full bg-potion-emerald animate-ping" />
-          <span className="font-bold text-cream">Hostel Ghost Radar:</span>
+          <span className="font-bold text-cream font-cinzel">Archival Ledger:</span>
           <span className="text-lavender-muted hidden sm:inline">
-            Active barter spirits detected in {selectedBlock === 'All' ? 'Blocks A, B, C & D' : selectedBlock}.
+            Active barter exchanges operating in {selectedBlock === 'All' ? 'Blocks A, B, C & D' : selectedBlock}.
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-pumpkin font-semibold text-[11px]">
-          <Flame className="w-3.5 h-3.5 text-pumpkin" />
+        <div className="flex items-center gap-1.5 text-gold font-semibold font-cinzel text-[11px] tracking-wider uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-gold" />
           <span>Zero Currency • 100% Barter</span>
         </div>
       </div>
 
       {/* FILTER CONTROL BAR */}
-      <div className="p-4 rounded-3xl bg-obsidian-surface border card-border-subtle shadow-lg space-y-3 mb-8 relative">
+      <div className="p-4 rounded-3xl bg-obsidian-surface border border-gold-subtle shadow-xl space-y-3 mb-8 relative">
         <CobwebCorner position="top-right" size={48} />
 
         {/* Top Control Line: Search & Hostel Block */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           {/* Live Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-lavender-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gold/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
@@ -335,7 +335,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                   ? 'Search relics by item name, notes, calculator, kettle...'
                   : 'Search wanted requests, courses, tools...'
               }
-              className="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-obsidian-dark border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted focus:outline-none focus:border-pumpkin focus:ring-1 focus:ring-pumpkin transition-all"
+              className="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-obsidian-dark border border-gold-subtle text-xs text-cream placeholder-lavender-muted focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-all"
             />
             {searchQuery && (
               <button
@@ -354,22 +354,22 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
               onChange={(e) =>
                 onSelectBlock(e.target.value as HostelBlock | 'All')
               }
-              className="w-full appearance-none pl-3.5 pr-8 py-2.5 rounded-2xl bg-obsidian-dark border border-pumpkin/20 text-xs font-semibold text-cream focus:outline-none focus:border-pumpkin cursor-pointer"
+              className="w-full appearance-none pl-3.5 pr-8 py-2.5 rounded-2xl bg-obsidian-dark border border-gold-subtle text-xs font-semibold font-cinzel text-cream focus:outline-none focus:border-gold cursor-pointer"
             >
               <option value="All">All Hostel Wings</option>
               <option value="Block A">Block A (Men - Tech Wing)</option>
               <option value="Block B">Block B (Senior Phantoms)</option>
               <option value="Block C">Block C (Women - Drafter Wing)</option>
-              <option value="Block D">Block D (Graduate Women)</option>
+              <option value="Block D">Block D (Graduate Studios)</option>
             </select>
-            <MapPin className="w-3.5 h-3.5 text-pumpkin absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <MapPin className="w-3.5 h-3.5 text-gold absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
           {/* Quick Post CTA Button */}
           <Magnetic strength={0.7}>
             <button
               onClick={onPostClick}
-              className="px-4 py-2.5 rounded-2xl bg-pumpkin/15 border border-pumpkin/30 hover:bg-pumpkin hover:text-obsidian-dark text-pumpkin text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0"
+              className="px-4 py-2.5 rounded-2xl bg-gold/15 border border-gold/40 hover:bg-gold hover:text-obsidian-dark text-gold text-xs font-cinzel font-bold tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 shrink-0"
             >
               <PlusCircle className="w-3.5 h-3.5" />
               <span>
@@ -389,23 +389,23 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
           {/* Sliding Layout Indicator Pill */}
           <div
             ref={slidingIndicatorRef}
-            className="absolute rounded-xl bg-pumpkin shadow-potion-glow pointer-events-none z-0 opacity-0 will-change-transform"
+            className="absolute rounded-xl bg-gradient-to-r from-gold via-gold-bright to-gold-dark shadow-gold-glow pointer-events-none z-0 opacity-0 will-change-transform"
           />
 
-          <span className="text-[11px] font-bold text-lavender-muted mr-1 shrink-0 uppercase tracking-wider relative z-10 select-none">
+          <span className="text-[11px] font-cinzel font-bold text-gold mr-1 shrink-0 uppercase tracking-wider relative z-10 select-none">
             Shelf:
           </span>
 
           <button
             ref={(el) => (categoryButtonRefs.current['All'] = el)}
             onClick={() => onSelectCategory('All')}
-            className={`relative z-10 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-colors duration-200 select-none ${
+            className={`relative z-10 px-3 py-1.5 rounded-xl text-xs font-cinzel font-semibold shrink-0 transition-colors duration-200 select-none ${
               selectedCategory === 'All'
                 ? 'text-obsidian-dark font-bold'
-                : 'bg-obsidian-dark/60 border border-white/5 text-lavender-muted hover:text-cream'
+                : 'bg-obsidian-dark/60 border border-gold-subtle text-lavender-muted hover:text-gold'
             }`}
           >
-            All Relics
+            All Shelves
           </button>
 
           {CATEGORIES.map((cat) => {
@@ -415,10 +415,10 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                 key={cat.id}
                 ref={(el) => (categoryButtonRefs.current[cat.id] = el)}
                 onClick={() => onSelectCategory(isSelected ? 'All' : cat.id)}
-                className={`relative z-10 px-3 py-1.5 rounded-xl text-xs font-semibold shrink-0 transition-colors duration-200 flex items-center gap-1.5 select-none ${
+                className={`relative z-10 px-3 py-1.5 rounded-xl text-xs font-cinzel font-semibold shrink-0 transition-colors duration-200 flex items-center gap-1.5 select-none ${
                   isSelected
                     ? 'text-obsidian-dark font-bold'
-                    : 'bg-obsidian-dark/60 border border-white/5 text-lavender-muted hover:text-cream'
+                    : 'bg-obsidian-dark/60 border border-gold-subtle text-lavender-muted hover:text-gold'
                 }`}
               >
                 <span>{cat.label}</span>

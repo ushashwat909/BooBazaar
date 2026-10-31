@@ -75,11 +75,11 @@ export const GhostCompanion: React.FC<GhostCompanionProps> = ({ onOpenOuija }) =
     return (
       <button
         onClick={() => setIsMinimized(false)}
-        className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-obsidian-surface border border-pumpkin/40 text-pumpkin shadow-potion-glow hover:scale-110 transition-all flex items-center gap-2 group"
-        title="Summon Barnaby the Hostel Phantom"
+        className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-obsidian-surface border border-gold/40 text-gold shadow-gold-glow hover:scale-110 transition-all flex items-center gap-2 group"
+        title="Summon Barnaby the Archival Phantom"
       >
-        <Ghost className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-        <span className="text-xs font-bold text-cream pr-1">Barnaby</span>
+        <Ghost className="w-5 h-5 group-hover:rotate-12 transition-transform text-gold" />
+        <span className="text-xs font-cinzel font-bold text-cream pr-1">Barnaby</span>
       </button>
     );
   }
@@ -90,7 +90,7 @@ export const GhostCompanion: React.FC<GhostCompanionProps> = ({ onOpenOuija }) =
       {bubbleText && (
         <div
           ref={bubbleRef}
-          className="pointer-events-auto max-w-xs mb-3 p-3.5 rounded-2xl bg-obsidian-surface/95 border border-pumpkin/30 shadow-2xl backdrop-blur-md text-xs text-cream relative will-change-transform"
+          className="pointer-events-auto max-w-xs mb-3 p-3.5 rounded-2xl bg-obsidian-surface/95 border border-gold/30 shadow-2xl backdrop-blur-md text-xs text-cream relative will-change-transform"
         >
           <button
             onClick={() => setBubbleText(null)}
@@ -104,13 +104,13 @@ export const GhostCompanion: React.FC<GhostCompanionProps> = ({ onOpenOuija }) =
             <p className="leading-relaxed font-medium text-cream/90">{bubbleText}</p>
           </div>
 
-          <div className="flex items-center justify-between gap-2 mt-2.5 pt-2 border-t border-white/10">
+          <div className="flex items-center justify-between gap-2 mt-2.5 pt-2 border-t border-gold/20">
             <button
               onClick={handleGhostClick}
-              className="text-[10px] font-bold text-pumpkin hover:underline flex items-center gap-1"
+              className="text-[10px] font-cinzel font-bold text-gold hover:underline flex items-center gap-1"
             >
               <MessageCircle className="w-3 h-3" />
-              <span>More Ghost Gossip</span>
+              <span>More Phantom Lore</span>
             </button>
 
             <button
@@ -118,15 +118,15 @@ export const GhostCompanion: React.FC<GhostCompanionProps> = ({ onOpenOuija }) =
                 hauntedAudio.playGhostChime();
                 onOpenOuija();
               }}
-              className="px-2.5 py-1 rounded-lg bg-pumpkin text-obsidian-dark font-extrabold text-[10px] uppercase tracking-wider shadow-potion-glow hover:scale-105 transition-all flex items-center gap-1"
+              className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian font-cinzel font-bold text-[10px] uppercase tracking-wider shadow-gold-glow hover:scale-105 transition-all flex items-center gap-1"
             >
-              <Dice5 className="w-3 h-3" />
+              <Dice5 className="w-3 h-3 stroke-[2.5]" />
               <span>Ouija Oracle</span>
             </button>
           </div>
 
           {/* Pointer caret */}
-          <div className="absolute -bottom-2 right-8 w-4 h-4 bg-obsidian-surface/95 border-r border-b border-pumpkin/30 rotate-45" />
+          <div className="absolute -bottom-2 right-8 w-4 h-4 bg-obsidian-surface/95 border-r border-b border-gold/30 rotate-45" />
         </div>
       )}
 
@@ -178,29 +178,30 @@ export const GhostCompanion: React.FC<GhostCompanionProps> = ({ onOpenOuija }) =
               strokeLinecap="round"
             />
 
-            {/* Floating Mini Lantern */}
+            {/* Floating Mini Brass Lantern */}
             <g transform="translate(68, 65)">
-              <rect x="0" y="4" width="12" height="16" rx="3" fill="#151022" stroke="#FF8A2B" strokeWidth="1.5" />
-              <circle cx="6" cy="12" r="3.5" fill="#FF8A2B" className="animate-pulse" />
-              <line x1="6" y1="0" x2="6" y2="4" stroke="#FF8A2B" strokeWidth="1.5" />
+              <rect x="0" y="4" width="12" height="16" rx="3" fill="#151022" stroke="#C5A059" strokeWidth="1.5" />
+              <circle cx="6" cy="12" r="3.5" fill="#E5C158" className="animate-pulse" />
+              <line x1="6" y1="0" x2="6" y2="4" stroke="#C5A059" strokeWidth="1.5" />
             </g>
 
             {/* Ghost Shading Gradient */}
             <defs>
               <linearGradient id="ghostGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#FFF8F0" />
-                <stop offset="70%" stopColor="#E0D7F5" />
-                <stop offset="100%" stopColor="#7B2CBF" stopOpacity="0.8" />
+                <stop offset="0%" stopColor="#FFFDF7" />
+                <stop offset="70%" stopColor="#E6DCBF" />
+                <stop offset="100%" stopColor="#8C6D37" stopOpacity="0.8" />
               </linearGradient>
             </defs>
           </svg>
 
           {/* Floating Tag */}
-          <span className="absolute -bottom-1 px-2 py-0.5 rounded-full bg-obsidian-surface/90 border border-pumpkin/30 text-[9px] font-extrabold text-pumpkin shadow-sm">
-            Barnaby 👻
+          <span className="absolute -bottom-1 px-2.5 py-0.5 rounded-full bg-obsidian-surface/95 border border-gold/40 text-[9px] font-cinzel font-bold text-gold-bright shadow-sm">
+            Barnaby ✦
           </span>
         </div>
       </div>
     </div>
   );
 };
+

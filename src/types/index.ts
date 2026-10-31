@@ -59,3 +59,24 @@ export interface Message {
   offer_tag?: 'Counter Offer' | 'Deal Accepted' | 'Snack Trade' | 'Free Claim' | 'System' | 'Pickup' | 'Availability' | string | null;
   created_at?: string;
 }
+
+export interface Experience {
+  id: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  description: string;
+  fullDescription: string;
+  duration: string;
+  startingPrice: string;
+  location: string;
+  difficulty: string;
+  category: string;
+  imageUrl: string;
+  galleryImages: string[];
+  itinerary: { step: string; title: string; desc: string }[];
+  included: string[];
+  departureTimes: string[];
+  rating: number;
+  reviewCount: number;
+}

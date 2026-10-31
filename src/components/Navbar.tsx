@@ -132,10 +132,17 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <a
-            href="#explore"
-            onClick={() => setActiveTab('explore')}
+            href="#experiences"
+            onClick={(e) => {
+              setActiveTab('experiences');
+              const el = document.getElementById('experiences');
+              if (el) {
+                e.preventDefault();
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             className={`px-3.5 py-2 rounded-lg flex items-center gap-1.5 transition-all ${
-              activeTab === 'explore'
+              activeTab === 'experiences'
                 ? 'text-gold bg-gold/10 font-bold border-b border-gold/40'
                 : 'text-cream/80 hover:text-gold hover:bg-white/5'
             }`}
@@ -368,8 +375,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             Home
           </button>
           <a
-            href="#explore"
-            onClick={() => setMobileMenuOpen(false)}
+            href="#experiences"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              const el = document.getElementById('experiences');
+              if (el) {
+                e.preventDefault();
+                el.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
             className="block py-2 px-3 text-xs font-cinzel font-bold text-cream hover:text-gold"
           >
             Experiences

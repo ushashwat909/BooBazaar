@@ -16,16 +16,32 @@ import { GhostCompanion } from './components/spooky/GhostCompanion';
 import { OuijaOracleGame } from './components/spooky/OuijaOracleGame';
 import { Item, ItemCategory, HostelBlock } from './types';
 import { INITIAL_ITEMS, supabase } from './lib/supabase';
+import { ExploreExperiencesSection } from './components/experiences/ExploreExperiencesSection';
+import { ExperienceDetailPage } from './pages/ExperienceDetailPage';
+import { EXPERIENCES } from './data/experiences';
 import { Flame } from 'lucide-react';
 
 const MainApp: React.FC = () => {
   const { currentUser, openAuthModal } = useAuth();
 
-  // Simple clean routing support for '/auth'
-  const [currentRoute, setCurrentRoute] = useState<'home' | 'auth'>(() => {
-    return window.location.pathname === '/auth' || window.location.hash === '#/auth'
-      ? 'auth'
-      : 'home';
+  // State for selected experience
+  const [selectedExperienceId, setSelectedExperienceId] = useState<string | null>(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#/experience/')) {
+      return hash.replace('#/experience/', '');
+    }
+    return null;
+  });
+
+  // Simple clean routing support for 'home' | 'auth' | 'experience'
+  const [currentRoute, setCurrentRoute] = useState<'home' | 'auth' | 'experience'>(() => {
+    if (window.location.pathname === '/auth' || window.location.hash === '#/auth') {
+      return 'auth';
+    }
+    if (window.location.hash.startsWith('#/experience/')) {
+      return 'experience';
+    }
+    return 'home';
   });
 
   const [items, setItems] = useState<Item[]>(() => {
@@ -56,8 +72,13 @@ const MainApp: React.FC = () => {
   // Sync with browser back/forward or hash changes
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash === '#/auth' || window.location.pathname === '/auth') {
+      const hash = window.location.hash;
+      if (hash === '#/auth' || window.location.pathname === '/auth') {
         setCurrentRoute('auth');
+      } else if (hash.startsWith('#/experience/')) {
+        const id = hash.replace('#/experience/', '');
+        setSelectedExperienceId(id);
+        setCurrentRoute('experience');
       } else {
         setCurrentRoute('home');
       }
@@ -65,6 +86,21 @@ const MainApp: React.FC = () => {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
+
+  const handleSelectExperience = (expId: string) => {
+    setSelectedExperienceId(expId);
+    setCurrentRoute('experience');
+    window.location.hash = `#/experience/${expId}`;
+  };
+
+  const handleBackToExperiences = () => {
+    setCurrentRoute('home');
+    window.location.hash = '#experiences';
+    setTimeout(() => {
+      const el = document.getElementById('experiences');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 60);
+  };
 
   // Sync with Supabase on load if available
   useEffect(() => {
@@ -217,6 +253,71 @@ const MainApp: React.FC = () => {
     );
   }
 
+  // Standalone individual experience detail view
+  if (currentRoute === 'experience') {
+    const activeExperience =
+      EXPERIENCES.find((e) => e.id === selectedExperienceId) || EXPERIENCES[0];
+    return (
+      <div className="min-h-screen flex flex-col bg-obsidian text-cream relative selection:bg-gold selection:text-obsidian-dark">
+        <AuraCursor />
+        <Navbar
+          onSearchClick={() => {
+            setCurrentRoute('home');
+            setTimeout(() => {
+              const el = document.getElementById('explore');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+          }}
+          onPostClick={() => openBrewModal('offer')}
+          onSeekingSpellsClick={() => {
+            setCurrentRoute('home');
+            handleSeekingSpellsNavClick();
+          }}
+          onActiveChatsClick={handleOpenActiveChats}
+          onOpenOuija={() => setIsOuijaOpen(true)}
+          activeTab={activeNavTab}
+          setActiveTab={(tab) => {
+            setActiveNavTab(tab);
+            setCurrentRoute('home');
+          }}
+        />
+
+        <div className="pt-20">
+          <ExperienceDetailPage
+            experience={activeExperience}
+            onBack={handleBackToExperiences}
+            onBook={() => openBrewModal('offer')}
+            onOpenChat={() => {
+              setActiveChatItem(items[0] || null);
+              setIsChatDrawerOpen(true);
+            }}
+          />
+        </div>
+
+        <Footer />
+        <AuthModal />
+        <BrewListingModal
+          isOpen={isBrewModalOpen}
+          onClose={() => setIsBrewModalOpen(false)}
+          onItemAdded={handleItemAdded}
+          defaultMode={brewModalMode}
+        />
+        <ChatModal
+          isOpen={isChatDrawerOpen}
+          onClose={() => setIsChatDrawerOpen(false)}
+          targetItem={activeChatItem}
+          activeConversationId={activeConversationId}
+          onItemClaimed={handleItemClaimed}
+        />
+        <OuijaOracleGame
+          isOpen={isOuijaOpen}
+          onClose={() => setIsOuijaOpen(false)}
+          onAwardKarma={handleAwardKarma}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-obsidian text-cream relative selection:bg-pumpkin selection:text-obsidian-dark">
       {/* Ambient Apothecary Aura Cursor & Spotlight Glow */}
@@ -250,7 +351,7 @@ const MainApp: React.FC = () => {
       {/* Full-Screen Edge-to-Edge Cinematic Hero Section */}
       <Hero
         onExploreClick={() => {
-          const el = document.getElementById('explore');
+          const el = document.getElementById('experiences') || document.getElementById('explore');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }}
         onBrewClick={() => openBrewModal('offer')}
@@ -259,6 +360,9 @@ const MainApp: React.FC = () => {
 
       {/* Main Content Container */}
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        {/* Premium Explore Our Experiences Section */}
+        <ExploreExperiencesSection onSelectExperience={handleSelectExperience} />
+
         {/* 6 Category Filter Row */}
         <div className="my-8">
           <CategoryFilter

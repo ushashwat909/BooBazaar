@@ -1,10 +1,12 @@
 import React, { useLayoutEffect, useRef } from 'react';
-import { Users, RefreshCw, Handshake, Leaf } from 'lucide-react';
+import { Users, RefreshCw, Handshake, Flame } from 'lucide-react';
+import { CobwebCorner } from './spooky/SpookyElements';
 import { gsap } from '../utils/animations';
 
 interface StatItem {
   icon: React.ElementType;
   target: number;
+  prefix?: string;
   suffix: string;
   label: string;
   color: string;
@@ -16,7 +18,7 @@ const statsData: StatItem[] = [
     icon: Users,
     target: 600,
     suffix: '+',
-    label: 'Students Connected',
+    label: 'Hostelers Connected',
     color: 'text-pumpkin',
     bg: 'bg-pumpkin/10',
   },
@@ -24,7 +26,7 @@ const statsData: StatItem[] = [
     icon: RefreshCw,
     target: 1200,
     suffix: '+',
-    label: 'Items Reused',
+    label: 'Dorm Relics Circulated',
     color: 'text-coven-light',
     bg: 'bg-coven/15',
   },
@@ -32,15 +34,15 @@ const statsData: StatItem[] = [
     icon: Handshake,
     target: 300,
     suffix: '+',
-    label: 'Successful Exchanges',
+    label: 'Midnight Barters Sealed',
     color: 'text-potion-emerald',
     bg: 'bg-potion-emerald/15',
   },
   {
-    icon: Leaf,
+    icon: Flame,
     target: 100,
     suffix: '%',
-    label: 'Greener Campus Together',
+    label: 'Pure Barter • Zero Cash',
     color: 'text-potion-gold',
     bg: 'bg-potion-gold/15',
   },
@@ -71,7 +73,7 @@ export const ImpactStrip: React.FC = () => {
           },
           onUpdate: () => {
             const current = Math.floor(proxy.val);
-            el.innerText = `${current.toLocaleString()}${stat.suffix}`;
+            el.innerText = `${stat.prefix || ''}${current.toLocaleString()}${stat.suffix}`;
           },
         });
       });
@@ -81,8 +83,9 @@ export const ImpactStrip: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="w-full my-10">
+    <section ref={containerRef} className="w-full my-10 relative">
       <div className="relative rounded-2xl bg-gradient-to-r from-obsidian-surface via-obsidian-surface to-coven/20 border card-border-subtle p-5 sm:p-6 shadow-xl overflow-hidden">
+        <CobwebCorner position="top-right" size={48} />
         {/* Glow corner */}
         <div className="absolute top-0 right-0 w-32 h-32 bg-pumpkin/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -97,7 +100,7 @@ export const ImpactStrip: React.FC = () => {
                 }`}
               >
                 <div
-                  className={`w-11 h-11 rounded-xl ${stat.bg} border border-white/10 flex items-center justify-center shrink-0`}
+                  className={`w-11 h-11 rounded-xl ${stat.bg} border border-white/10 flex items-center justify-center shrink-0 shadow-sm`}
                 >
                   <Icon className={`w-5 h-5 ${stat.color}`} />
                 </div>

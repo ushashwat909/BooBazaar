@@ -7,10 +7,13 @@ import {
   PlusCircle,
   Package,
   Scroll,
+  Skull,
+  Flame,
 } from 'lucide-react';
 import { CATEGORIES } from './CategoryFilter';
 import { Magnetic } from './ui/Magnetic';
 import { ItemCard } from './cards/ItemCard';
+import { CobwebCorner } from './spooky/SpookyElements';
 import { gsap } from '../utils/animations';
 
 interface ItemGridProps {
@@ -179,7 +182,6 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
 
     if (cardElements && cardElements.length > 0) {
       gsap.killTweensOf(cardElements);
-      // GSAP departing cards exit
       gsap.to(cardElements, {
         opacity: 0,
         y: 15,
@@ -228,24 +230,24 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
   }, [displayedItems]);
 
   return (
-    <section id="explore" className="w-full my-12 scroll-mt-24">
+    <section id="explore" className="w-full my-12 scroll-mt-24 relative">
       {/* Feed Title & High-Level Intro */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-5">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
-            <span className="text-pumpkin text-sm">✦</span>
+            <Skull className="w-3.5 h-3.5 text-pumpkin" />
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-lavender-muted">
-              Live Campus Inventory
+              Live Haunted Wing Inventory
             </span>
           </div>
           <h2 className="font-editorial text-3xl sm:text-4xl font-extrabold text-cream">
             {selectedFeedTab === 'treasures'
-              ? 'Recently Discovered Treasures'
+              ? 'Recently Discovered Relics'
               : 'Seeking Spells (Wanted Board)'}
           </h2>
           <p className="text-xs sm:text-sm text-lavender-muted mt-1">
             {selectedFeedTab === 'treasures'
-              ? `${filteredItems.length} items ready for immediate barter or pickup across campus wings`
+              ? `${filteredItems.length} relics ready for immediate room barter across campus blocks`
               : `${filteredItems.length} active requests from students seeking essentials in your wing`}
           </p>
         </div>
@@ -262,7 +264,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
               }`}
             >
               <Package className="w-3.5 h-3.5" />
-              <span>Pantry Treasures</span>
+              <span>Pantry Relics</span>
               <span
                 className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
                   selectedFeedTab === 'treasures'
@@ -300,8 +302,25 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
         </div>
       </div>
 
+      {/* Spectral Radar Banner */}
+      <div className="flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-coven/20 via-obsidian-surface to-pumpkin/15 border border-pumpkin/20 mb-4 text-xs">
+        <div className="flex items-center gap-2.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-potion-emerald animate-ping" />
+          <span className="font-bold text-cream">Hostel Ghost Radar:</span>
+          <span className="text-lavender-muted hidden sm:inline">
+            Active barter spirits detected in {selectedBlock === 'All' ? 'Blocks A, B, C & D' : selectedBlock}.
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 text-pumpkin font-semibold text-[11px]">
+          <Flame className="w-3.5 h-3.5 text-pumpkin" />
+          <span>Zero Currency • 100% Barter</span>
+        </div>
+      </div>
+
       {/* FILTER CONTROL BAR */}
-      <div className="p-4 rounded-3xl bg-obsidian-surface border card-border-subtle shadow-lg space-y-3 mb-8">
+      <div className="p-4 rounded-3xl bg-obsidian-surface border card-border-subtle shadow-lg space-y-3 mb-8 relative">
+        <CobwebCorner position="top-right" size={48} />
+
         {/* Top Control Line: Search & Hostel Block */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           {/* Live Search Input */}
@@ -313,7 +332,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={
                 selectedFeedTab === 'treasures'
-                  ? 'Live search by item name, notes, calculator...'
+                  ? 'Search relics by item name, notes, calculator, kettle...'
                   : 'Search wanted requests, courses, tools...'
               }
               className="w-full pl-10 pr-9 py-2.5 rounded-2xl bg-obsidian-dark border border-pumpkin/20 text-xs text-cream placeholder-lavender-muted focus:outline-none focus:border-pumpkin focus:ring-1 focus:ring-pumpkin transition-all"
@@ -337,10 +356,10 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
               }
               className="w-full appearance-none pl-3.5 pr-8 py-2.5 rounded-2xl bg-obsidian-dark border border-pumpkin/20 text-xs font-semibold text-cream focus:outline-none focus:border-pumpkin cursor-pointer"
             >
-              <option value="All">All Hostel Blocks</option>
-              <option value="Block A">Block A (Men)</option>
-              <option value="Block B">Block B (Senior Men)</option>
-              <option value="Block C">Block C (Women)</option>
+              <option value="All">All Hostel Wings</option>
+              <option value="Block A">Block A (Men - Tech Wing)</option>
+              <option value="Block B">Block B (Senior Phantoms)</option>
+              <option value="Block C">Block C (Women - Drafter Wing)</option>
               <option value="Block D">Block D (Graduate Women)</option>
             </select>
             <MapPin className="w-3.5 h-3.5 text-pumpkin absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -374,7 +393,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
           />
 
           <span className="text-[11px] font-bold text-lavender-muted mr-1 shrink-0 uppercase tracking-wider relative z-10 select-none">
-            Category:
+            Shelf:
           </span>
 
           <button
@@ -386,7 +405,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                 : 'bg-obsidian-dark/60 border border-white/5 text-lavender-muted hover:text-cream'
             }`}
           >
-            All Categories
+            All Relics
           </button>
 
           {CATEGORIES.map((cat) => {
@@ -412,18 +431,18 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
       {/* Grid of Items with Fluid Transitions */}
       {displayedItems.length === 0 ? (
         <div className="rounded-3xl bg-obsidian-surface border card-border-subtle p-12 text-center max-w-lg mx-auto space-y-4">
-          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-coven/30 to-pumpkin/20 border border-pumpkin/30 text-pumpkin flex items-center justify-center mx-auto text-2xl shadow-potion-glow">
-            {selectedFeedTab === 'treasures' ? '🔮' : '📜'}
+          <div className="w-16 h-16 rounded-3xl bg-gradient-to-tr from-coven/30 to-pumpkin/20 border border-pumpkin/30 text-pumpkin flex items-center justify-center mx-auto text-3xl shadow-potion-glow">
+            {selectedFeedTab === 'treasures' ? '👻' : '📜'}
           </div>
           <h3 className="font-editorial text-2xl font-bold text-cream">
             {selectedFeedTab === 'treasures'
-              ? 'No Treasures in This Wing'
-              : 'No Seeking Spells in This Wing'}
+              ? 'No Relics on This Shelf'
+              : 'No Active Seeking Spells'}
           </h3>
-          <p className="text-xs sm:text-sm text-lavender-muted">
+          <p className="text-xs sm:text-sm text-lavender-muted leading-relaxed">
             {searchQuery
-              ? `No results found for "${searchQuery}". Try a broader keyword or clear the filter.`
-              : `No items matched your current hostel block and category filters.`}
+              ? `No spectral items found for "${searchQuery}". Try searching for notes, kettle, or drafter.`
+              : `The hostel phantoms have claimed all items matching your current filters. Brew a listing to start a new barter!`}
           </p>
           <div className="flex items-center justify-center gap-3 pt-2">
             <Magnetic strength={0.8}>
@@ -435,7 +454,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                 }}
                 className="px-5 py-2.5 rounded-full bg-pumpkin text-obsidian-dark font-bold text-xs uppercase tracking-wider shadow-potion-glow hover:scale-105 transition-all"
               >
-                Reset Filters
+                Reset Shelves
               </button>
             </Magnetic>
             <Magnetic strength={0.8}>
@@ -444,7 +463,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                 className="px-5 py-2.5 rounded-full bg-coven/20 border border-coven/40 text-cream font-bold text-xs uppercase tracking-wider hover:bg-coven/30 transition-all"
               >
                 {selectedFeedTab === 'treasures'
-                  ? 'Brew an Item'
+                  ? 'Brew a Relic'
                   : 'Post a Request'}
               </button>
             </Magnetic>

@@ -27,20 +27,20 @@ export const INITIAL_USERS: User[] = [
     room_number: '112',
     roll_number: '23EC018',
     karma_points: 65,
-  }
+  },
 ];
 
-// Initial Seed Items matching the homepage prompt & unsplash photos
+// Initial Seed Items with authentic spooky hostel lore
 export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333331',
     owner_id: 'a1111111-1111-1111-1111-111111111111',
-    title: 'Engineering Mathematics',
-    description: 'Comprehensive textbook covering differential calculus, linear algebra, and complex numbers. Crisp pages with highlighted formulas and summary sheets.',
+    title: 'Engineering Mathematics (Grimoire of Calculus 3)',
+    description: 'Comprehensive textbook with all highlighted formulas and summary cheat sheets. Guaranteed to help you survive university end-sems.',
     category: 'Spell Books',
     listing_type: 'Available',
-    condition: '2nd Year',
-    expected_return: 'Swap for Semester 4 Notes or 2x Maggi packs',
+    condition: '2nd Year Battle-Tested',
+    expected_return: 'Swap for Sem 4 Notes or 2x Maggi packs',
     hostel_block: 'Block B',
     image_url: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -50,11 +50,11 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333332',
     owner_id: 'b2222222-2222-2222-2222-222222222222',
-    title: 'Wireless Headphones',
-    description: 'Over-ear noise isolating Bluetooth headphones. 25-hour battery life and deep bass. Ideal for exam-week deep focus in noisy hostel rooms.',
+    title: 'Wireless Noise-Isolating Headphones',
+    description: 'Over-ear Bluetooth headphones with 25-hour battery life. Blocks all roommate snoring and late-night wing noise during cram week.',
     category: 'Enchanted Tech',
     listing_type: 'Available',
-    condition: 'Good condition',
+    condition: 'Fully working',
     expected_return: 'Open to trades or study snacks',
     hostel_block: 'Block C',
     image_url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
@@ -65,12 +65,12 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333333',
     owner_id: 'a1111111-1111-1111-1111-111111111111',
-    title: 'Study Lamp',
-    description: 'Flexible gooseneck LED desk lamp with 3 color temperatures and soft touch dimmer. Gentle on eyes during late-night cram sessions.',
+    title: 'Spectral Night Study Lamp',
+    description: 'Gooseneck LED desk lamp with 3 color temperatures. Perfect for midnight study sessions when your roommate demands dark mode.',
     category: 'Room Charms',
     listing_type: 'Donation',
-    condition: 'Fully working',
-    expected_return: 'Free to juniors',
+    condition: 'Ensorcelled Glow',
+    expected_return: 'Free offering to freshers',
     hostel_block: 'Block A',
     image_url: 'https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -80,12 +80,12 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333334',
     owner_id: 'b2222222-2222-2222-2222-222222222222',
-    title: 'Scientific Calculator',
-    description: 'Scientific calculator approved for university exams. Features matrix calculations, vector arithmetic, and statistical formulas.',
+    title: 'Casio fx-991EX Classwiz (Cursed by Engineering)',
+    description: 'The legendary calculator that solved 4 batches of linear algebra and matrix inversions. 100% exam hall compliant with solar backup.',
     category: 'Magic Tools',
     listing_type: 'Available',
-    condition: 'Used, good condition',
-    expected_return: 'Swap for Casio fx-991EX or coffee coupons',
+    condition: 'Passed 4 Batches',
+    expected_return: 'Swap for drawing drafter or canteen coffee',
     hostel_block: 'Block D',
     image_url: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -95,12 +95,12 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333335',
     owner_id: 'a1111111-1111-1111-1111-111111111111',
-    title: 'Study Chair',
-    description: 'Ergonomic breathable mesh chair with cushioned seat and smooth rolling caster wheels. Helps posture through long project nights.',
-    category: 'Dorm Treasures',
+    title: 'Midnight Electric Kettle 1.5L (Banned by Warden)',
+    description: 'Stainless steel instant water boiler. The absolute lifeblood of hostel life: boils water for tea, coffee, and 3 AM Maggi in 90 seconds.',
+    category: 'Enchanted Tech',
     listing_type: 'Exchange',
-    condition: 'Sturdy and comfortable',
-    expected_return: 'Exchange for an ergonomic cushion or table fan',
+    condition: 'Clean & fully working',
+    expected_return: 'Exchange for an ergonomic chair or table fan',
     hostel_block: 'Block B',
     image_url: 'https://images.unsplash.com/photo-1580481077195-c22ae2b3326f?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -110,12 +110,12 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'c3333333-3333-3333-3333-333333333336',
     owner_id: 'b2222222-2222-2222-2222-222222222222',
-    title: 'Fiction Novels',
-    description: 'Curated set of 5 page-turner novels (mystery, thriller, and sci-fi classics). Perfect weekend leisure read between assignments.',
+    title: 'Classic Horror & Sci-Fi Novels (Bundle of 5)',
+    description: 'Five spine-chilling page-turners (Lovecraft, Stephen King, and gothic thrillers). Ideal for windy dormitory nights when hostel WiFi dies.',
     category: 'Spell Books',
     listing_type: 'Available',
-    condition: 'Set of 5',
-    expected_return: 'Looking for Sci-Fi or fantasy series',
+    condition: 'Set of 5 paperbacks',
+    expected_return: 'Looking for fantasy series or manga',
     hostel_block: 'Block C',
     image_url: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -125,12 +125,12 @@ export const INITIAL_ITEMS: Item[] = [
   {
     id: 'w4444444-4444-4444-4444-444444444441',
     owner_id: 'a1111111-1111-1111-1111-111111111111',
-    title: 'Urgent: Engineering Drawing Drafter & Clips',
-    description: 'Need a working mini-drafter for ED midterms next week. Any brand is fine as long as the scales rotate properly.',
+    title: 'Urgent: Engineering Drafter for ED Midterms',
+    description: 'Need a working mini-drafter with tight knobs for tomorrow morning ED exam. Will return with gratitude or snack barter!',
     category: 'Magic Tools',
     listing_type: 'Wanted',
-    condition: 'Fully working',
-    expected_return: 'Will pay ₹150 or trade 2 packs of Cadbury Silk',
+    condition: 'Working condition',
+    expected_return: 'Will trade 2 packs of Cadbury Silk or ₹150 canteen credit',
     hostel_block: 'Block B',
     image_url: 'https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
@@ -141,17 +141,17 @@ export const INITIAL_ITEMS: Item[] = [
     id: 'w4444444-4444-4444-4444-444444444442',
     owner_id: 'b2222222-2222-2222-2222-222222222222',
     title: 'Operating Systems Handwritten Notes (Unit 3-5)',
-    description: 'Looking for neat handwritten notes or summary booklet for OS concepts (CPU Scheduling, Deadlocks, Memory Management).',
+    description: 'Seeking neat handwritten notes for CPU Scheduling, Deadlocks, and Paging. Willing to barter with full DBMS question bank!',
     category: 'Spell Books',
     listing_type: 'Wanted',
     condition: 'Legible handwriting',
-    expected_return: 'Will share full DBMS SQL question bank or treat to canteen cold coffee',
+    expected_return: 'Will share full DBMS question bank + treat to cold coffee',
     hostel_block: 'Block C',
     image_url: 'https://images.unsplash.com/photo-1517842645767-c639042777db?auto=format&fit=crop&w=800&q=80',
     status: 'Open',
     created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
     owner: INITIAL_USERS[1],
-  }
+  },
 ];
 
 // Initial Seed Conversations
@@ -166,7 +166,7 @@ export const INITIAL_CONVERSATIONS: Conversation[] = [
     seller: INITIAL_USERS[0],
     buyer: INITIAL_USERS[1],
     last_message: 'Deal! 2 Maggi packets or semester notes work great.',
-    last_message_at: '20 mins ago'
+    last_message_at: '20 mins ago',
   },
   {
     id: 'conv-222',
@@ -178,8 +178,8 @@ export const INITIAL_CONVERSATIONS: Conversation[] = [
     seller: INITIAL_USERS[1],
     buyer: INITIAL_USERS[0],
     last_message: 'Hey, are these headphones still available for swap?',
-    last_message_at: '45 mins ago'
-  }
+    last_message_at: '45 mins ago',
+  },
 ];
 
 export const INITIAL_MESSAGES: Record<string, Message[]> = {
@@ -188,9 +188,12 @@ export const INITIAL_MESSAGES: Record<string, Message[]> = {
       id: 'msg-1',
       conversation_id: 'conv-111',
       sender_id: 'b2222222-2222-2222-2222-222222222222',
-      content: 'Hey Aarav! Saw your Engineering Mathematics textbook. Does it include the Unit 4 Laplace transform formulas?',
+      content: 'Hey Aarav! Saw your Engineering Mathematics book. Does it include the Unit 4 Laplace transform formulas?',
       offer_tag: 'Availability',
-      created_at: new Date(Date.now() - 1000 * 60 * 25).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      created_at: new Date(Date.now() - 1000 * 60 * 25).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     },
     {
       id: 'msg-2',
@@ -198,43 +201,58 @@ export const INITIAL_MESSAGES: Record<string, Message[]> = {
       sender_id: 'a1111111-1111-1111-1111-111111111111',
       content: 'Yes Meera! It has all highlighted theorem summaries and handwritten formula bookmarks glued inside.',
       offer_tag: null,
-      created_at: new Date(Date.now() - 1000 * 60 * 23).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      created_at: new Date(Date.now() - 1000 * 60 * 20).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     },
     {
       id: 'msg-3',
       conversation_id: 'conv-111',
       sender_id: 'b2222222-2222-2222-2222-222222222222',
-      content: 'Awesome! Can I trade for 2x Special Masala Maggi + Nescafe coffee sachets?',
+      content: 'Awesome! Can I trade you 2x spicy Maggi packs + Nescafe pouch for it?',
       offer_tag: 'Snack Trade',
-      created_at: new Date(Date.now() - 1000 * 60 * 21).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      created_at: new Date(Date.now() - 1000 * 60 * 15).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     },
     {
       id: 'msg-4',
       conversation_id: 'conv-111',
       sender_id: 'a1111111-1111-1111-1111-111111111111',
-      content: 'Deal! 2 Maggi packets or semester notes work great for me. I am in Block B Room 204.',
+      content: 'Deal sealed! Come up to Block B Room 204 anytime before 11 PM or meet by the common room water cooler.',
       offer_tag: 'Deal Accepted',
-      created_at: new Date(Date.now() - 1000 * 60 * 20).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
+      created_at: new Date(Date.now() - 1000 * 60 * 10).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    },
   ],
   'conv-222': [
     {
       id: 'msg-201',
       conversation_id: 'conv-222',
       sender_id: 'a1111111-1111-1111-1111-111111111111',
-      content: 'Hey Meera, are these noise-cancelling headphones still available for swap?',
+      content: 'Hey Meera, are those noise-isolating headphones still available for barter?',
       offer_tag: 'Availability',
-      created_at: new Date(Date.now() - 1000 * 60 * 45).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      created_at: new Date(Date.now() - 1000 * 60 * 40).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     },
     {
       id: 'msg-202',
       conversation_id: 'conv-222',
       sender_id: 'b2222222-2222-2222-2222-222222222222',
-      content: 'Yes Aarav! Battery is fully charged. What study items or snacks do you have in Block B?',
-      offer_tag: null,
-      created_at: new Date(Date.now() - 1000 * 60 * 40).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]
+      content: 'Yes Aarav! Battery is 100% healthy. What are you open to trading?',
+      offer_tag: 'Counter Offer',
+      created_at: new Date(Date.now() - 1000 * 60 * 35).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    },
+  ],
 };
 
 // Helper: Upload photo to Supabase storage bucket `item-photos`
@@ -248,7 +266,7 @@ export const uploadItemPhoto = async (file: File): Promise<string> => {
       .from('item-photos')
       .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: false
+        upsert: false,
       });
 
     if (uploadError) {

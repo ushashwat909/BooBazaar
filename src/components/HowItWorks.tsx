@@ -1,5 +1,6 @@
 import React from 'react';
-import { Camera, MapPin, MessageCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Camera, MapPin, MessageCircle, CheckCircle2, Skull } from 'lucide-react';
+import { CobwebCorner } from './spooky/SpookyElements';
 
 export const HowItWorks: React.FC = () => {
   const steps = [
@@ -16,7 +17,7 @@ export const HowItWorks: React.FC = () => {
     {
       num: '02',
       title: 'Hostel-Block Discovery',
-      subtitle: 'Hyper-Local Campus Map',
+      subtitle: 'Hyper-Local Wing Map',
       desc: 'Filter essentials right in your own hostel wing (Block A, B, C, or D). Pick up items a few doors down without shipping delays.',
       icon: MapPin,
       badge: 'Wing Filters',
@@ -25,8 +26,8 @@ export const HowItWorks: React.FC = () => {
     },
     {
       num: '03',
-      title: 'Live Coven Bargaining',
-      subtitle: 'Real-Time Student Negotiations',
+      title: 'Live 1-on-1 Bargaining',
+      subtitle: 'Real-Time Student Barter',
       desc: 'Open a 1-on-1 chat to negotiate a barter, swap for notes or snacks (Maggi packs!), or claim zero-cost donations directly.',
       icon: MessageCircle,
       badge: 'Instant Chat',
@@ -36,10 +37,10 @@ export const HowItWorks: React.FC = () => {
   ];
 
   return (
-    <section id="how-it-works" className="w-full my-16">
+    <section id="how-it-works" className="w-full my-16 relative">
       <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-coven/20 border border-coven/30 text-coven-light text-xs font-bold uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5" />
+          <Skull className="w-3.5 h-3.5 text-pumpkin" />
           <span>Judges & Student Explainer</span>
         </div>
         <h2 className="font-editorial text-3xl sm:text-4xl font-extrabold text-cream">
@@ -58,15 +59,21 @@ export const HowItWorks: React.FC = () => {
               key={idx}
               className="relative p-6 rounded-3xl bg-obsidian-surface border card-border-subtle hover:border-pumpkin/40 transition-all duration-300 flex flex-col justify-between group overflow-hidden"
             >
+              <CobwebCorner position="top-right" size={38} />
+
               {/* Subtle gradient sweep */}
-              <div className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-br ${step.bgGlow} rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500`} />
+              <div
+                className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-br ${step.bgGlow} rounded-full blur-2xl group-hover:scale-125 transition-transform duration-500`}
+              />
 
               <div>
                 <div className="flex items-center justify-between mb-5">
                   <span className="font-editorial text-3xl font-extrabold text-lavender-muted/40 group-hover:text-pumpkin transition-colors">
                     {step.num}
                   </span>
-                  <div className={`w-11 h-11 rounded-2xl bg-obsidian-dark border ${step.accent} flex items-center justify-center shadow-md`}>
+                  <div
+                    className={`w-11 h-11 rounded-2xl bg-obsidian-dark border ${step.accent} flex items-center justify-center shadow-md`}
+                  >
                     <Icon className="w-5 h-5" />
                   </div>
                 </div>
@@ -99,4 +106,3 @@ export const HowItWorks: React.FC = () => {
     </section>
   );
 };
-

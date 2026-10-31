@@ -9,8 +9,11 @@ import {
   ArrowRightLeft,
   Scroll,
   Handshake,
+  Skull,
+  Flame,
 } from 'lucide-react';
 import { Magnetic } from '../ui/Magnetic';
+import { CobwebCorner } from '../spooky/SpookyElements';
 import { gsap } from '../../utils/animations';
 
 interface ItemCardProps {
@@ -104,7 +107,6 @@ export const ItemCard: React.FC<ItemCardProps> = ({
       });
     }
 
-    // Move spotlight away on leave
     cardRef.current.style.setProperty('--mouse-x', '-500px');
     cardRef.current.style.setProperty('--mouse-y', '-500px');
   };
@@ -113,25 +115,26 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     switch (type) {
       case 'Available':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-potion-emerald/15 text-potion-emerald border border-potion-emerald/30 shadow-sm">
-            ● Available
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-potion-emerald/20 text-potion-emerald border border-potion-emerald/40 shadow-sm flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-potion-emerald animate-pulse" />
+            <span>Available</span>
           </span>
         );
       case 'Donation':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-pumpkin/15 text-pumpkin border border-pumpkin/30 shadow-sm flex items-center gap-1">
-            <Gift className="w-2.5 h-2.5" /> Free Donation
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-pumpkin/20 text-pumpkin border border-pumpkin/40 shadow-sm flex items-center gap-1">
+            <Gift className="w-2.5 h-2.5" /> Free Offering
           </span>
         );
       case 'Exchange':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-coven/25 text-coven-light border border-coven/40 shadow-sm flex items-center gap-1">
-            <ArrowRightLeft className="w-2.5 h-2.5" /> Exchange
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-coven/30 text-coven-light border border-coven/50 shadow-sm flex items-center gap-1">
+            <ArrowRightLeft className="w-2.5 h-2.5" /> Barter Swap
           </span>
         );
       case 'Wanted':
         return (
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-500/15 text-rose-400 border border-rose-500/30 shadow-sm flex items-center gap-1">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-red-500/20 text-red-300 border border-red-500/40 shadow-sm flex items-center gap-1">
             <Scroll className="w-2.5 h-2.5" /> Seeking Spell
           </span>
         );
@@ -174,6 +177,9 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             className="relative aspect-[16/10] w-full overflow-hidden bg-obsidian-dark will-change-transform"
             style={{ transformStyle: 'preserve-3d' }}
           >
+            {/* Spooky Cobweb in corner */}
+            <CobwebCorner position="top-right" size={48} />
+
             <img
               src={item.image_url}
               alt={item.title}
@@ -182,18 +188,18 @@ export const ItemCard: React.FC<ItemCardProps> = ({
             />
 
             {/* Gradient bottom overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-card via-transparent to-black/35 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-obsidian-card via-transparent to-black/40 pointer-events-none" />
 
             {/* Heart Favorite Button */}
             <Magnetic strength={0.6} className="absolute top-3.5 right-3.5 z-20">
               <button
                 onClick={(e) => onToggleFavorite(item.id, e)}
-                className="w-8 h-8 rounded-full bg-obsidian/75 backdrop-blur-md border border-white/10 flex items-center justify-center text-cream hover:scale-110 active:scale-95 transition-all shadow-md"
-                title={isFav ? 'Saved to your potions' : 'Save item'}
+                className="w-8 h-8 rounded-full bg-obsidian/85 backdrop-blur-md border border-white/10 flex items-center justify-center text-cream hover:scale-110 active:scale-95 transition-all shadow-md"
+                title={isFav ? 'Saved to your relics' : 'Save relic'}
               >
                 <Heart
                   className={`w-4 h-4 transition-colors ${
-                    isFav ? 'fill-rose-500 text-rose-500' : 'text-cream/80'
+                    isFav ? 'fill-red-500 text-red-500' : 'text-cream/80'
                   }`}
                 />
               </button>
@@ -205,7 +211,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
               className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-1.5 z-20 will-change-transform"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-obsidian/85 backdrop-blur-md text-lavender-muted border border-white/15 shadow-sm">
+              <span className="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-obsidian/90 backdrop-blur-md text-lavender-muted border border-white/15 shadow-sm">
                 {item.category}
               </span>
               {renderListingTypePill(item.listing_type)}
@@ -215,14 +221,15 @@ export const ItemCard: React.FC<ItemCardProps> = ({
           {/* Card Body */}
           <div className="p-5 flex-1 flex flex-col justify-between">
             <div>
-              {/* Location and Condition Line */}
+              {/* Location and Spooky Condition Line */}
               <div className="flex items-center justify-between text-xs mb-2">
                 <span className="inline-flex items-center gap-1 text-pumpkin font-semibold">
                   <MapPin className="w-3.5 h-3.5" />
                   {item.hostel_block}
                 </span>
-                <span className="text-[11px] text-lavender-muted font-medium px-2 py-0.5 rounded-md bg-white/5 border border-white/5">
-                  {item.condition}
+                <span className="text-[11px] text-lavender-muted font-medium px-2 py-0.5 rounded-md bg-white/5 border border-white/5 flex items-center gap-1">
+                  <Flame className="w-2.5 h-2.5 text-pumpkin" />
+                  <span>{item.condition}</span>
                 </span>
               </div>
 
@@ -236,7 +243,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 {item.description}
               </p>
 
-              {/* Expected Return / Swap Term */}
+              {/* Expected Return / Barter Term */}
               {item.expected_return && (
                 <div
                   className={`p-2.5 rounded-xl border flex items-start gap-2 text-xs mb-4 ${
@@ -273,7 +280,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 className="w-full py-2.5 rounded-xl bg-coven/20 border border-coven/40 text-cream group-hover:bg-coven group-hover:text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
               >
                 <Handshake className="w-3.5 h-3.5 text-coven-light group-hover:text-white transition-colors" />
-                <span>🤝 I Have This / Fulfill Spell</span>
+                <span>🤝 I Have This / Claim Karma</span>
               </button>
             ) : (
               <button
@@ -281,7 +288,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
                 className="w-full py-2.5 rounded-xl bg-coven/15 border border-coven/30 text-cream group-hover:bg-pumpkin group-hover:text-obsidian-dark group-hover:border-pumpkin font-bold text-xs uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2"
               >
                 <MessageSquare className="w-3.5 h-3.5 text-coven-light group-hover:text-obsidian-dark transition-colors" />
-                <span>💬 Bargain / Chat with Owner</span>
+                <span>💬 Bargain with Owner</span>
               </button>
             )}
           </div>
@@ -290,4 +297,3 @@ export const ItemCard: React.FC<ItemCardProps> = ({
     </div>
   );
 };
-

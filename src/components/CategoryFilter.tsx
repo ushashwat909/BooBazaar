@@ -3,13 +3,15 @@ import { ItemCategory } from '../types';
 import {
   BookOpen,
   PenTool,
-  Sparkles,
+  Flame,
   Cpu,
   Package,
   Gift,
   Check,
+  Skull,
 } from 'lucide-react';
 import { Magnetic } from './ui/Magnetic';
+import { CobwebCorner } from './spooky/SpookyElements';
 import { gsap } from '../utils/animations';
 
 interface CategoryFilterProps {
@@ -28,48 +30,48 @@ export const CATEGORIES: {
 }[] = [
   {
     id: 'Spell Books',
-    label: 'Spell Books',
-    sublabel: 'Books & Notes',
+    label: 'Cursed Textbooks',
+    sublabel: 'Notes & Lab Manuals',
     icon: BookOpen,
     gradient: 'from-coven/30 to-obsidian-surface',
     iconColor: 'text-coven-light',
   },
   {
     id: 'Magic Tools',
-    label: 'Magic Tools',
-    sublabel: 'Stationery & Calc',
+    label: 'Engineering Relics',
+    sublabel: 'Drafters & Casio Calcs',
     icon: PenTool,
     gradient: 'from-pumpkin/25 to-obsidian-surface',
     iconColor: 'text-pumpkin',
   },
   {
     id: 'Room Charms',
-    label: 'Room Charms',
-    sublabel: 'Room Essentials & Lamps',
-    icon: Sparkles,
+    label: 'Midnight Charms',
+    sublabel: 'Study Lamps & Blankets',
+    icon: Flame,
     gradient: 'from-potion-emerald/25 to-obsidian-surface',
     iconColor: 'text-potion-emerald',
   },
   {
     id: 'Enchanted Tech',
-    label: 'Enchanted Tech',
-    sublabel: 'Gadgets & Audio',
+    label: 'Banned Dorm Tech',
+    sublabel: 'Kettles, Audio & Chargers',
     icon: Cpu,
     gradient: 'from-blue-500/25 to-obsidian-surface',
     iconColor: 'text-blue-400',
   },
   {
     id: 'Dorm Treasures',
-    label: 'Dorm Treasures',
-    sublabel: 'Chairs & Hostel Items',
+    label: 'Hostel Furniture',
+    sublabel: 'Chairs, Trunks & Hangers',
     icon: Package,
     gradient: 'from-amber-600/25 to-obsidian-surface',
     iconColor: 'text-amber-400',
   },
   {
     id: 'Free Potions',
-    label: 'Free Potions',
-    sublabel: '100% Free Donations',
+    label: 'Ghost Offerings',
+    sublabel: '100% Free Hostel Loot',
     icon: Gift,
     gradient: 'from-rose-500/25 to-obsidian-surface',
     iconColor: 'text-rose-400',
@@ -154,9 +156,11 @@ const CategoryCardItem: React.FC<CategoryCardItemProps> = ({
           }`}
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {/* Subtle top indicator when active */}
+          {isSelected && <CobwebCorner position="top-right" size={36} />}
+
+          {/* Active checkmark */}
           {isSelected && (
-            <span className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-pumpkin text-obsidian flex items-center justify-center text-[10px] font-bold shadow-sm">
+            <span className="absolute top-2.5 right-2.5 w-4 h-4 rounded-full bg-pumpkin text-obsidian flex items-center justify-center text-[10px] font-bold shadow-sm z-10">
               <Check className="w-2.5 h-2.5 stroke-[3]" />
             </span>
           )}
@@ -176,7 +180,7 @@ const CategoryCardItem: React.FC<CategoryCardItemProps> = ({
             </Magnetic>
 
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/5 text-lavender-muted border border-white/5">
-              {count} {count === 1 ? 'item' : 'items'}
+              {count} {count === 1 ? 'relic' : 'relics'}
             </span>
           </div>
 
@@ -210,9 +214,9 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     <div className="w-full">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <span className="text-pumpkin text-sm">✦</span>
+          <Skull className="w-4 h-4 text-pumpkin" />
           <h2 className="text-xs uppercase tracking-[0.2em] font-bold text-lavender-muted">
-            Categories of Enchantment
+            The Six Apothecary Shelves
           </h2>
         </div>
 
@@ -221,7 +225,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             onClick={() => onSelectCategory('All')}
             className="text-xs font-semibold text-pumpkin hover:underline flex items-center gap-1"
           >
-            Clear Filter (Show All)
+            Clear Filter (Show All Shelves)
           </button>
         )}
       </div>

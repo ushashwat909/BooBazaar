@@ -1,20 +1,26 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, Sparkles, BookOpen, PlusCircle, Shield, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, PlusCircle, Shield, Users, Dices, Skull, Flame } from 'lucide-react';
 import { Magnetic } from './ui/Magnetic';
 import { HeroHeadline } from './hero/HeroHeadline';
+import { CobwebCorner, GhostMist } from './spooky/SpookyElements';
 import { gsap } from '../utils/animations';
 
 interface HeroProps {
   onExploreClick: () => void;
   onBrewClick: () => void;
+  onOpenOuija?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
+export const Hero: React.FC<HeroProps> = ({
+  onExploreClick,
+  onBrewClick,
+  onOpenOuija,
+}) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
   const bottleRef = useRef<HTMLDivElement>(null);
-  const sparklesRef = useRef<HTMLDivElement>(null);
+  const floatingItemsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!cardRef.current || !bgRef.current || !bottleRef.current) return;
@@ -28,11 +34,11 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
       ease: 'sine.inOut',
     });
 
-    // Layer 2 (Floating magical sparkles & badges): Orbiting micro-adjustments
-    let sparklesTween: gsap.core.Tween | null = null;
-    if (sparklesRef.current) {
-      sparklesTween = gsap.to(sparklesRef.current, {
-        rotate: 8,
+    // Layer 2 (Floating magical badges & bats): Orbiting micro-adjustments
+    let itemsTween: gsap.core.Tween | null = null;
+    if (floatingItemsRef.current) {
+      itemsTween = gsap.to(floatingItemsRef.current, {
+        rotate: 6,
         y: -6,
         repeat: -1,
         yoyo: true,
@@ -63,7 +69,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
       if (!heroRef.current || !cardRef.current) return;
       const rect = heroRef.current.getBoundingClientRect();
 
-      // Normalized coordinates (-1 to 1)
       const normX = Math.max(
         -1,
         Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1)
@@ -73,11 +78,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
         Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1)
       );
 
-      // Subtle 3D tilt to the showcase container (max 8 degrees)
       rotateYTo(normX * 8);
       rotateXTo(-normY * 8);
 
-      // Layer 0: Moves subtly inverted on mousemove (delta * 0.015)
       const deltaX = e.clientX - (rect.left + rect.width / 2);
       const deltaY = e.clientY - (rect.top + rect.height / 2);
       bgXTo(-deltaX * 0.015);
@@ -99,7 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
 
     return () => {
       bottleTween.kill();
-      if (sparklesTween) sparklesTween.kill();
+      if (itemsTween) itemsTween.kill();
       if (heroEl) {
         heroEl.removeEventListener('mousemove', handleMouseMove);
         heroEl.removeEventListener('mouseleave', handleMouseLeave);
@@ -111,14 +114,14 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
     <section
       ref={heroRef}
       id="home"
-      className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden"
+      className="relative pt-6 pb-16 lg:pt-12 lg:pb-24 overflow-hidden"
     >
+      <GhostMist />
+
       {/* Atmospheric Background Apothecary Vignette */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Soft radial glows */}
-        <div className="absolute top-12 left-1/4 w-96 h-96 bg-coven/15 rounded-full blur-[110px]" />
-        <div className="absolute top-24 right-1/4 w-[450px] h-[450px] bg-pumpkin/12 rounded-full blur-[130px]" />
-        {/* Subtle grid pattern with mask */}
+        <div className="absolute top-12 left-1/4 w-96 h-96 bg-coven/20 rounded-full blur-[120px]" />
+        <div className="absolute top-24 right-1/4 w-[450px] h-[450px] bg-pumpkin/15 rounded-full blur-[130px]" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -132,24 +135,24 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Headline & Action Controls */}
           <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
-            {/* Kinetic Text Mask Reveals & Witch Hat Accent */}
+            {/* Bold, Grounded Headline */}
             <HeroHeadline />
 
             {/* Subtext */}
             <p className="text-base sm:text-lg text-lavender-muted max-w-xl font-normal leading-relaxed">
-              Trade, donate and discover hostel essentials within your campus. Snap
-              a photo of what you don't need, post it to the pantry, and bargain
-              live with fellow hostelers in your wing.
+              Passed down from 4th-year phantoms to freshers at 3 AM. Zero currency,
+              pure hostel barter. Trade lab drafters, electric kettles, Casio calculators,
+              and sacred exam notes before the next full moon.
             </p>
 
             {/* CTA Buttons with Magnetic Physics */}
-            <div className="flex flex-wrap items-center gap-4 pt-2 w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-3.5 pt-2 w-full sm:w-auto">
               <Magnetic strength={1.2}>
                 <button
                   onClick={onExploreClick}
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-pumpkin via-pumpkin to-pumpkin-dark text-obsidian-dark font-bold text-sm tracking-wide shadow-potion-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 group"
+                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-pumpkin via-pumpkin to-pumpkin-dark text-obsidian-dark font-extrabold text-sm tracking-wide shadow-potion-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 group"
                 >
-                  <span>Explore the Pantry</span>
+                  <span>Explore Cursed Relics</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </Magnetic>
@@ -157,23 +160,39 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
               <Magnetic strength={1}>
                 <button
                   onClick={onBrewClick}
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-coven/20 border border-coven/40 text-cream font-semibold text-sm hover:bg-coven/30 hover:border-coven/60 hover:shadow-coven-glow transition-all flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-coven/25 border border-coven/40 text-cream font-semibold text-sm hover:bg-coven/40 hover:border-coven/60 hover:shadow-coven-glow transition-all flex items-center justify-center gap-2"
                 >
                   <PlusCircle className="w-4 h-4 text-coven-light" />
                   <span>Brew a Listing</span>
                 </button>
               </Magnetic>
+
+              {onOpenOuija && (
+                <Magnetic strength={0.8}>
+                  <button
+                    onClick={onOpenOuija}
+                    className="w-full sm:w-auto px-5 py-3.5 rounded-full bg-obsidian-surface border border-pumpkin/30 text-pumpkin hover:bg-pumpkin/15 font-bold text-sm transition-all flex items-center justify-center gap-2"
+                  >
+                    <Dices className="w-4 h-4" />
+                    <span>Ouija Oracle Game</span>
+                  </button>
+                </Magnetic>
+              )}
             </div>
 
-            {/* Micro Trust Indicators */}
-            <div className="pt-4 flex items-center gap-6 text-xs text-lavender-muted">
+            {/* Micro Trust Indicators - Authentic Dorm Badges */}
+            <div className="pt-2 flex flex-wrap items-center gap-5 text-xs text-lavender-muted">
               <div className="flex items-center gap-1.5">
                 <Shield className="w-4 h-4 text-potion-emerald" />
                 <span>Verified Campus Roll Numbers</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-pumpkin" />
-                <span>Zero Cash Required</span>
+                <span>Zero Cash • 100% Barter</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Skull className="w-4 h-4 text-coven-light" />
+                <span>Guarded by Hostel Phantoms</span>
               </div>
             </div>
           </div>
@@ -186,16 +205,18 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
             {/* Main Showcase Container with 3D Tilt */}
             <div
               ref={cardRef}
-              className="interactive-card relative w-full max-w-md rounded-3xl bg-gradient-to-b from-obsidian-card to-obsidian-dark border card-border-subtle p-5 sm:p-6 shadow-2xl overflow-hidden group will-change-transform"
+              className="interactive-card relative w-full max-w-md rounded-3xl bg-gradient-to-b from-obsidian-card to-obsidian-dark border border-pumpkin/25 p-5 sm:p-6 shadow-2xl overflow-hidden group will-change-transform"
               style={{
                 transformStyle: 'preserve-3d',
               }}
             >
+              <CobwebCorner position="top-right" size={64} />
+
               {/* Inner ambient light */}
               <div className="absolute -top-16 -right-16 w-44 h-44 bg-pumpkin/20 rounded-full blur-3xl group-hover:bg-pumpkin/30 transition-all duration-500 pointer-events-none" />
               <div className="absolute -bottom-16 -left-16 w-44 h-44 bg-coven/25 rounded-full blur-3xl pointer-events-none" />
 
-              {/* Terraced Visual: Potion Flask, Books & Lamp Scene */}
+              {/* Visual Scene: Glowing Potion Flask, Vintage Books & Ambient Night Scene */}
               <div className="relative rounded-2xl overflow-hidden bg-obsidian-surface/80 border border-white/5 aspect-[4/3] flex items-center justify-center">
                 {/* Layer 0 (Apothecary background): Moves subtly inverted on mousemove */}
                 <div
@@ -207,7 +228,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
                     alt="Apothecary Books and Atmosphere"
                     className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-transparent" />
                 </div>
 
                 {/* Layer 1 (Glowing potion bottle): Continuous floating idle loop */}
@@ -241,41 +262,36 @@ export const Hero: React.FC<HeroProps> = ({ onExploreClick, onBrewClick }) => {
                   </span>
                 </div>
 
-                {/* Layer 2 (Floating magical sparkles & badges): Orbiting micro-adjustments */}
+                {/* Layer 2 (Floating magical badges): Orbiting micro-adjustments */}
                 <div
-                  ref={sparklesRef}
+                  ref={floatingItemsRef}
                   className="absolute inset-0 pointer-events-none z-20 will-change-transform"
                 >
                   {/* Top Left Live Activity Badge */}
-                  <div className="absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-lg bg-obsidian/85 border border-white/10 text-[11px] text-cream backdrop-blur-sm shadow-md">
+                  <div className="absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-lg bg-obsidian/90 border border-white/10 text-[11px] text-cream backdrop-blur-sm shadow-md">
                     <span className="w-2 h-2 rounded-full bg-potion-emerald animate-pulse" />
-                    <span>Block B • Just Exchanged Notes</span>
+                    <span>Block B • Bartered Drafter at 2 AM</span>
                   </div>
 
                   {/* Top Right Circulation Badge */}
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian/85 border border-coven/30 text-[11px] text-coven-light backdrop-blur-sm shadow-md">
+                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian/90 border border-coven/30 text-[11px] text-coven-light backdrop-blur-sm shadow-md">
                     <BookOpen className="w-3 h-3" />
-                    <span>32 Books In Circulation</span>
-                  </div>
-
-                  {/* Micro ambient sparkles */}
-                  <div className="absolute bottom-5 right-6 text-pumpkin/60">
-                    <Sparkles className="w-4 h-4 animate-pulse" />
+                    <span>32 Cursed Relics Active</span>
                   </div>
                 </div>
               </div>
 
-              {/* Card Footer Detail: Floating Mission Badge */}
+              {/* Card Footer Detail: Haunted Mission Badge */}
               <div className="mt-5 p-3.5 rounded-2xl bg-gradient-to-r from-obsidian-surface via-obsidian-surface to-coven/15 border border-pumpkin/20 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-pumpkin/20 border border-pumpkin/30 flex items-center justify-center text-pumpkin shrink-0">
-                  <Sparkles className="w-4 h-4 fill-pumpkin" />
+                  <Flame className="w-4 h-4 fill-pumpkin" />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs font-bold text-cream tracking-wide">
-                    A Cleaner Campus • A Brighter Tomorrow
+                    Passed Down Through 4 Batches
                   </span>
                   <span className="text-[11px] text-lavender-muted font-medium">
-                    Reuse, Share, Belong — Keep hostel rooms clutter-free.
+                    Keep your room clutter-free. Save ₹10,000 every semester.
                   </span>
                 </div>
               </div>

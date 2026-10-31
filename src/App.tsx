@@ -12,16 +12,20 @@ import { ChatModal } from './components/ChatModal';
 import { Footer } from './components/Footer';
 import { AuthPage } from './pages/AuthPage';
 import { AuraCursor } from './components/ui/AuraCursor';
+import { GhostCompanion } from './components/spooky/GhostCompanion';
+import { OuijaOracleGame } from './components/spooky/OuijaOracleGame';
 import { Item, ItemCategory, HostelBlock } from './types';
 import { INITIAL_ITEMS, supabase } from './lib/supabase';
-import { Sparkles } from 'lucide-react';
+import { Flame } from 'lucide-react';
 
 const MainApp: React.FC = () => {
   const { currentUser, openAuthModal } = useAuth();
 
   // Simple clean routing support for '/auth'
   const [currentRoute, setCurrentRoute] = useState<'home' | 'auth'>(() => {
-    return window.location.pathname === '/auth' || window.location.hash === '#/auth' ? 'auth' : 'home';
+    return window.location.pathname === '/auth' || window.location.hash === '#/auth'
+      ? 'auth'
+      : 'home';
   });
 
   const [items, setItems] = useState<Item[]>(() => {
@@ -40,10 +44,11 @@ const MainApp: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeNavTab, setActiveNavTab] = useState('home');
 
-  // Modals & Chat Drawer State
+  // Modals, Spirit Game & Chat Drawer State
   const [isBrewModalOpen, setIsBrewModalOpen] = useState(false);
   const [brewModalMode, setBrewModalMode] = useState<'offer' | 'request'>('offer');
   const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
+  const [isOuijaOpen, setIsOuijaOpen] = useState(false);
   const [activeChatItem, setActiveChatItem] = useState<Item | null>(null);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -162,22 +167,33 @@ const MainApp: React.FC = () => {
           hostel_block: newItem.hostel_block,
           image_url: newItem.image_url,
           status: 'Open',
-        }
+        },
       ]);
     } catch (e) {
       console.warn('Supabase insert skipped:', e);
     }
 
-    showToast(`✨ "${newItem.title}" brewed successfully to ${newItem.hostel_block}!`);
+    showToast(`📜 "${newItem.title}" added to ${newItem.hostel_block} pantry!`);
   };
 
   const handleItemClaimed = (claimedItemId: string) => {
-    const updated = items.map(item => 
+    const updated = items.map((item) =>
       item.id === claimedItemId ? { ...item, status: 'Claimed' as const } : item
     );
     setItems(updated);
     localStorage.setItem('potion_pantry_items', JSON.stringify(updated));
-    showToast('🎉 Item marked as Claimed! +25 Karma points credited.');
+    showToast('🎉 Item marked as Claimed! +50 Potion Points credited.');
+  };
+
+  // Award Karma from Ouija / Ghost Minigame
+  const handleAwardKarma = (points: number) => {
+    if (currentUser) {
+      currentUser.karma_points += points;
+      localStorage.setItem('potion_pantry_current_user', JSON.stringify(currentUser));
+      showToast(`👻 The Spirits awarded you +${points} Karma Points!`);
+    } else {
+      showToast(`👻 The Spirits revealed: +${points} Karma! Sign in to keep it!`);
+    }
   };
 
   // Compute category counts
@@ -191,25 +207,28 @@ const MainApp: React.FC = () => {
     return (
       <>
         <AuraCursor />
-        <AuthPage 
+        <AuthPage
           onBackToPantry={() => {
             window.location.hash = '';
             setCurrentRoute('home');
-          }} 
+          }}
         />
       </>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-cream relative">
+    <div className="min-h-screen flex flex-col bg-obsidian text-cream relative selection:bg-pumpkin selection:text-obsidian-dark">
       {/* Ambient Apothecary Aura Cursor & Spotlight Glow */}
       <AuraCursor />
+
+      {/* Interactive Ghost Mascot Companion */}
+      <GhostCompanion onOpenOuija={() => setIsOuijaOpen(true)} />
 
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark font-bold text-xs shadow-potion-glow border border-pumpkin-light flex items-center gap-2 animate-in slide-in-from-bottom duration-300">
-          <Sparkles className="w-4 h-4 fill-obsidian-dark" />
+          <Flame className="w-4 h-4 fill-obsidian-dark" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -223,6 +242,7 @@ const MainApp: React.FC = () => {
         onPostClick={() => openBrewModal('offer')}
         onSeekingSpellsClick={handleSeekingSpellsNavClick}
         onActiveChatsClick={handleOpenActiveChats}
+        onOpenOuija={() => setIsOuijaOpen(true)}
         activeTab={activeNavTab}
         setActiveTab={setActiveNavTab}
       />
@@ -236,6 +256,7 @@ const MainApp: React.FC = () => {
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
           onBrewClick={() => openBrewModal('offer')}
+          onOpenOuija={() => setIsOuijaOpen(true)}
         />
 
         {/* 6 Category Filter Row */}
@@ -262,7 +283,9 @@ const MainApp: React.FC = () => {
           selectedFeedTab={selectedFeedTab}
           onSelectFeedTab={setSelectedFeedTab}
           onItemChat={handleOpenItemChat}
-          onPostClick={() => openBrewModal(selectedFeedTab === 'seeking' ? 'request' : 'offer')}
+          onPostClick={() =>
+            openBrewModal(selectedFeedTab === 'seeking' ? 'request' : 'offer')
+          }
         />
 
         {/* How It Works Explainer for Judges */}
@@ -286,6 +309,13 @@ const MainApp: React.FC = () => {
         targetItem={activeChatItem}
         activeConversationId={activeConversationId}
         onItemClaimed={handleItemClaimed}
+      />
+
+      {/* Ouija Oracle & Ghost Minigame Modal */}
+      <OuijaOracleGame
+        isOpen={isOuijaOpen}
+        onClose={() => setIsOuijaOpen(false)}
+        onAwardKarma={handleAwardKarma}
       />
     </div>
   );

@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #0B0813;
+    color: #FFF8F0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Subtle glowing apothecary effects without clutter */
+.glow-pumpkin {
+  box-shadow: 0 0 20px -3px rgba(255, 138, 43, 0.35);
+}
+
+.glow-coven {
+  box-shadow: 0 0 20px -3px rgba(123, 44, 191, 0.4);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 15px -3px rgba(46, 196, 182, 0.45);
+}
+
+.card-border-subtle {
+  border: 1px solid rgba(255, 145, 48, 0.16);
+}
+
+.card-border-coven {
+  border: 1px solid rgba(123, 44, 191, 0.28);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0813;
+}
+::-webkit-scrollbar-thumb {
+  background: #251B38;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF8A2B;
+}
+

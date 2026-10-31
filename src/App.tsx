@@ -18,6 +18,7 @@ import { Item, ItemCategory, HostelBlock } from './types';
 import { INITIAL_ITEMS, supabase } from './lib/supabase';
 import { ExploreExperiencesSection } from './components/experiences/ExploreExperiencesSection';
 import { ImmersiveStorySection } from './components/story/ImmersiveStorySection';
+import { TestimonialsSection } from './components/testimonials/TestimonialsSection';
 import { ExperienceDetailPage } from './pages/ExperienceDetailPage';
 import { EXPERIENCES } from './data/experiences';
 import { Flame } from 'lucide-react';
@@ -403,6 +404,9 @@ const MainApp: React.FC = () => {
 
         {/* How It Works Explainer for Judges */}
         <HowItWorks />
+
+        {/* Stories That Stay With You - Customer Testimonials Section */}
+        <TestimonialsSection />
       </main>
 
       {/* Footer */}

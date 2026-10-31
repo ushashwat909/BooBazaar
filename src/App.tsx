@@ -17,6 +17,7 @@ import { OuijaOracleGame } from './components/spooky/OuijaOracleGame';
 import { Item, ItemCategory, HostelBlock } from './types';
 import { INITIAL_ITEMS, supabase } from './lib/supabase';
 import { ExploreExperiencesSection } from './components/experiences/ExploreExperiencesSection';
+import { ImmersiveStorySection } from './components/story/ImmersiveStorySection';
 import { ExperienceDetailPage } from './pages/ExperienceDetailPage';
 import { EXPERIENCES } from './data/experiences';
 import { Flame } from 'lucide-react';
@@ -362,6 +363,14 @@ const MainApp: React.FC = () => {
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Premium Explore Our Experiences Section */}
         <ExploreExperiencesSection onSelectExperience={handleSelectExperience} />
+
+        {/* Immersive Storytelling Documentary Section */}
+        <ImmersiveStorySection
+          onDiscoverStory={() => {
+            const el = document.getElementById('how-it-works');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+        />
 
         {/* 6 Category Filter Row */}
         <div className="my-8">

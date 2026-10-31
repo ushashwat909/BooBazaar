@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { ArrowRight, BookOpen, PlusCircle, Shield, Dices, Star } from 'lucide-react';
+import { ArrowRight, PlusCircle, Shield, Dices, Star, ChevronDown, Compass } from 'lucide-react';
 import { Magnetic } from './ui/Magnetic';
-import { HeroHeadline } from './hero/HeroHeadline';
-import { CobwebCorner, GhostMist } from './spooky/SpookyElements';
+import { GhostMist, SpookyBat } from './spooky/SpookyElements';
 import { gsap } from '../utils/animations';
 
 interface HeroProps {
@@ -17,291 +16,303 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenOuija,
 }) => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const bottleRef = useRef<HTMLDivElement>(null);
-  const floatingItemsRef = useRef<HTMLDivElement>(null);
+  const bgImageRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const trustRef = useRef<HTMLDivElement>(null);
+  const scrollIndicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!cardRef.current || !bgRef.current || !bottleRef.current) return;
+    // 1. Smooth Staggered Entrance Choreography
+    const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
-    // Layer 1 (Glowing potion bottle): Continuous floating idle loop
-    const bottleTween = gsap.to(bottleRef.current, {
-      y: -12,
-      duration: 2.8,
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-    });
-
-    // Layer 2 (Floating magical badges & bats): Orbiting micro-adjustments
-    let itemsTween: gsap.core.Tween | null = null;
-    if (floatingItemsRef.current) {
-      itemsTween = gsap.to(floatingItemsRef.current, {
-        rotate: 6,
-        y: -6,
-        repeat: -1,
-        yoyo: true,
-        duration: 3.4,
-        ease: 'sine.inOut',
-      });
+    if (labelRef.current) {
+      tl.fromTo(
+        labelRef.current,
+        { y: 25, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, delay: 0.15 }
+      );
     }
 
-    // Setters for smooth 3D tilt and inverted background parallax
-    const rotateXTo = gsap.quickTo(cardRef.current, 'rotationX', {
-      duration: 0.6,
-      ease: 'power3.out',
-    });
-    const rotateYTo = gsap.quickTo(cardRef.current, 'rotationY', {
-      duration: 0.6,
-      ease: 'power3.out',
-    });
-    const bgXTo = gsap.quickTo(bgRef.current, 'x', {
-      duration: 0.7,
-      ease: 'power2.out',
-    });
-    const bgYTo = gsap.quickTo(bgRef.current, 'y', {
-      duration: 0.7,
-      ease: 'power2.out',
-    });
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current || !cardRef.current) return;
-      const rect = heroRef.current.getBoundingClientRect();
-
-      const normX = Math.max(
-        -1,
-        Math.min(1, ((e.clientX - rect.left) / rect.width) * 2 - 1)
-      );
-      const normY = Math.max(
-        -1,
-        Math.min(1, ((e.clientY - rect.top) / rect.height) * 2 - 1)
-      );
-
-      rotateYTo(normX * 8);
-      rotateXTo(-normY * 8);
-
-      const deltaX = e.clientX - (rect.left + rect.width / 2);
-      const deltaY = e.clientY - (rect.top + rect.height / 2);
-      bgXTo(-deltaX * 0.015);
-      bgYTo(-deltaY * 0.015);
-    };
-
-    const handleMouseLeave = () => {
-      rotateXTo(0);
-      rotateYTo(0);
-      bgXTo(0);
-      bgYTo(0);
-    };
-
-    const heroEl = heroRef.current;
-    if (heroEl) {
-      heroEl.addEventListener('mousemove', handleMouseMove);
-      heroEl.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    return () => {
-      bottleTween.kill();
-      if (itemsTween) itemsTween.kill();
-      if (heroEl) {
-        heroEl.removeEventListener('mousemove', handleMouseMove);
-        heroEl.removeEventListener('mouseleave', handleMouseLeave);
+    if (headlineRef.current) {
+      const lines = headlineRef.current.querySelectorAll('.headline-line');
+      if (lines.length > 0) {
+        tl.fromTo(
+          lines,
+          { y: 48, opacity: 0, rotateX: 12 },
+          { y: 0, opacity: 1, rotateX: 0, duration: 1.15, stagger: 0.12 },
+          '-=0.65'
+        );
       }
-    };
+    }
+
+    if (descRef.current) {
+      tl.fromTo(
+        descRef.current,
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9 },
+        '-=0.75'
+      );
+    }
+
+    if (ctaRef.current) {
+      tl.fromTo(
+        ctaRef.current.children,
+        { y: 22, opacity: 0, scale: 0.94 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.85, stagger: 0.08, ease: 'back.out(1.5)' },
+        '-=0.65'
+      );
+    }
+
+    if (trustRef.current) {
+      tl.fromTo(
+        trustRef.current,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.8 },
+        '-=0.5'
+      );
+    }
+
+    if (scrollIndicatorRef.current) {
+      tl.fromTo(
+        scrollIndicatorRef.current,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.8 },
+        '-=0.4'
+      );
+    }
+
+    // 2. Subtle Parallax Mousemove Physics on Background
+    if (bgImageRef.current) {
+      const bgX = gsap.quickTo(bgImageRef.current, 'x', { duration: 1.2, ease: 'power2.out' });
+      const bgY = gsap.quickTo(bgImageRef.current, 'y', { duration: 1.2, ease: 'power2.out' });
+
+      const handleMouseMove = (e: MouseEvent) => {
+        const normX = (e.clientX / window.innerWidth) * 2 - 1;
+        const normY = (e.clientY / window.innerHeight) * 2 - 1;
+        bgX(-normX * 18);
+        bgY(-normY * 14);
+      };
+
+      const handleScroll = () => {
+        if (!bgImageRef.current) return;
+        const scrollY = window.scrollY;
+        if (scrollY < window.innerHeight) {
+          gsap.set(bgImageRef.current, { y: scrollY * 0.32 });
+        }
+      };
+
+      window.addEventListener('mousemove', handleMouseMove, { passive: true });
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+      return () => {
+        tl.kill();
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, []);
 
   return (
     <section
       ref={heroRef}
       id="home"
-      className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden"
+      className="relative w-full min-h-[94vh] lg:min-h-screen flex flex-col justify-between items-center overflow-hidden select-none"
     >
-      <GhostMist />
-
-      {/* Atmospheric Background Apothecary Vignette */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-12 left-1/4 w-96 h-96 bg-coven/20 rounded-full blur-[130px]" />
-        <div className="absolute top-24 right-1/4 w-[450px] h-[450px] bg-gold/15 rounded-full blur-[140px]" />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `radial-gradient(rgba(197, 160, 89, 0.4) 1px, transparent 1px)`,
-            backgroundSize: '24px 24px',
-          }}
+      {/* ============================================================== */}
+      {/* 1. BREATHTAKING HIGH-RESOLUTION ATMOSPHERIC BACKGROUND & PARALLAX */}
+      {/* ============================================================== */}
+      <div
+        ref={bgImageRef}
+        className="absolute inset-0 w-[112%] h-[112%] -left-[6%] -top-[6%] pointer-events-none will-change-transform z-0"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=2560&q=85"
+          alt="Atmospheric Gothic Stone Vaults and Lantern Archives"
+          className="w-full h-full object-cover object-center scale-105"
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Monumental Headline & Accolade Controls */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left space-y-6">
-            <HeroHeadline />
+      {/* ============================================================== */}
+      {/* 2. MULTI-LAYER DARK GRADIENT & VIGNETTE OVERLAY */}
+      {/* ============================================================== */}
+      {/* Top Gradient for Navigation Legibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-obsidian/55 to-obsidian pointer-events-none z-10" />
 
-            {/* Subtext */}
-            <p className="text-base sm:text-lg text-cream-muted max-w-xl font-normal leading-relaxed">
-              Passed down through generations of hostelers at 3 AM. Zero currency,
-              pure peer-to-peer barter. Claim drawing drafters, induction kettles,
-              scientific calculators, and exam notes before the semester concludes.
-            </p>
+      {/* Cinematic Radial Vignette Framing the Center */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          background:
+            'radial-gradient(ellipse at center, rgba(11,9,16,0.2) 0%, rgba(11,9,16,0.65) 60%, rgba(11,9,16,0.96) 100%)',
+        }}
+      />
 
-            {/* CTA Buttons Inspired by Premium Theatrical Tour Booking */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-2 w-full sm:w-auto">
-              <Magnetic strength={1.2}>
-                <button
-                  onClick={onExploreClick}
-                  className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian-dark font-cinzel font-bold text-xs uppercase tracking-widest shadow-gold-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 group"
-                >
-                  <span>Explore the Vaults</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </Magnetic>
+      {/* Ambient Torchlight & Coven Accent Lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gold/10 rounded-full blur-[140px] pointer-events-none z-10" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[350px] bg-coven/20 rounded-full blur-[150px] pointer-events-none z-10" />
 
-              <Magnetic strength={1}>
-                <button
-                  onClick={onBrewClick}
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-obsidian-surface border border-gold/30 text-cream font-cinzel font-semibold text-xs uppercase tracking-wider hover:bg-gold/15 hover:border-gold hover:shadow-gold-glow transition-all flex items-center justify-center gap-2"
-                >
-                  <PlusCircle className="w-4 h-4 text-gold" />
-                  <span>Brew a Listing</span>
-                </button>
-              </Magnetic>
+      {/* Subtle Atmospheric Light Shimmer Texture */}
+      <div
+        className="absolute inset-0 opacity-[0.035] pointer-events-none z-10"
+        style={{
+          backgroundImage: `radial-gradient(rgba(197, 160, 89, 0.45) 1px, transparent 1px)`,
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-              {onOpenOuija && (
-                <Magnetic strength={0.8}>
-                  <button
-                    onClick={onOpenOuija}
-                    className="w-full sm:w-auto px-5 py-3.5 rounded-full bg-obsidian-surface border border-coven/40 text-gold-bright hover:bg-gold/10 font-cinzel text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-                  >
-                    <Dices className="w-4 h-4 text-gold" />
-                    <span>Spirit Oracle</span>
-                  </button>
-                </Magnetic>
-              )}
-            </div>
-
-            {/* Social Proof & Accolades Band (City of the Dead Style) */}
-            <div className="pt-2 flex flex-wrap items-center gap-5 text-xs text-lavender-muted">
-              <div className="flex items-center gap-1.5 text-gold font-semibold">
-                <div className="flex items-center text-gold">
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                  <Star className="w-3.5 h-3.5 fill-gold" />
-                </div>
-                <span>4.9 / 5 by 600+ Students</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Shield className="w-4 h-4 text-potion-emerald" />
-                <span>100% University Verified</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                <span>Zero Currency Law Active</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Architectural Vault Showcase Card */}
+      {/* ============================================================== */}
+      {/* 3. SUBTLE ANIMATED ATMOSPHERIC ELEMENTS (Floating Embers & Mist) */}
+      {/* ============================================================== */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
+        {[...Array(14)].map((_, i) => (
           <div
-            className="lg:col-span-5 relative flex justify-center"
-            style={{ perspective: 1200 }}
-          >
-            {/* Main Showcase Container with 3D Tilt */}
-            <div
-              ref={cardRef}
-              className="interactive-card relative w-full max-w-md rounded-3xl bg-gradient-to-b from-obsidian-card to-obsidian-dark border border-gold/30 p-5 sm:p-6 shadow-2xl overflow-hidden group will-change-transform"
-              style={{
-                transformStyle: 'preserve-3d',
-              }}
-            >
-              <CobwebCorner position="top-right" size={64} />
+            key={i}
+            className="absolute rounded-full bg-gold/70 animate-pulse pointer-events-none"
+            style={{
+              width: `${(i % 3) + 2}px`,
+              height: `${(i % 3) + 2}px`,
+              top: `${(i * 7 + 12) % 85}%`,
+              left: `${(i * 11 + 6) % 92}%`,
+              opacity: 0.2 + (i % 5) * 0.12,
+              boxShadow: '0 0 10px rgba(197, 160, 89, 0.8)',
+              animationDuration: `${3.5 + (i % 4)}s`,
+              animationDelay: `${(i % 5) * 0.7}s`,
+            }}
+          />
+        ))}
+      </div>
 
-              {/* Inner ambient lighting */}
-              <div className="absolute -top-16 -right-16 w-44 h-44 bg-gold/20 rounded-full blur-3xl group-hover:bg-gold/30 transition-all duration-500 pointer-events-none" />
-              <div className="absolute -bottom-16 -left-16 w-44 h-44 bg-coven/25 rounded-full blur-3xl pointer-events-none" />
+      <GhostMist />
 
-              {/* Terraced Visual: Potion Flask & Library Scene */}
-              <div className="relative rounded-2xl overflow-hidden bg-obsidian-surface/80 border border-gold/20 aspect-[4/3] flex items-center justify-center">
-                {/* Layer 0: Background Inverted Parallax */}
-                <div
-                  ref={bgRef}
-                  className="absolute inset-0 w-[114%] h-[114%] -left-[7%] -top-[7%] will-change-transform"
-                >
-                  <img
-                    src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80"
-                    alt="Atmospheric Vaults and Manuscripts"
-                    className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/50 to-transparent" />
-                </div>
-
-                {/* Layer 1: Floating Glowing Relic Flask */}
-                <div
-                  ref={bottleRef}
-                  className="relative z-10 flex flex-col items-center will-change-transform"
-                >
-                  <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-b from-coven/40 to-obsidian-surface border border-gold/50 shadow-gold-glow backdrop-blur-md flex items-center justify-center">
-                    <svg
-                      className="w-12 h-12 text-gold drop-shadow-[0_0_12px_rgba(197,160,89,0.8)]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M9 2h6" />
-                      <path d="M10 2v4a2 2 0 0 1-.586 1.414l-4.828 4.828A4 4 0 0 0 3.414 15V18a4 4 0 0 0 4 4h9.172a4 4 0 0 0 4-4v-3a4 4 0 0 0-1.172-2.758L14.586 7.414A2 2 0 0 1 14 6V2" />
-                      <line
-                        x1="8"
-                        y1="14"
-                        x2="16"
-                        y2="14"
-                        stroke="#2EC4B6"
-                        strokeWidth="2"
-                      />
-                    </svg>
-                    <span className="absolute bottom-2 left-6 w-1.5 h-1.5 rounded-full bg-potion-emerald animate-ping" />
-                  </div>
-                  <span className="mt-3 px-3 py-1 rounded-full bg-obsidian-dark/95 border border-gold/30 text-gold text-[10px] font-cinzel font-bold tracking-widest uppercase backdrop-blur-sm">
-                    VAULT ACCESS ACTIVE • BLOCK B
-                  </span>
-                </div>
-
-                {/* Layer 2: Floating Tour Badges */}
-                <div
-                  ref={floatingItemsRef}
-                  className="absolute inset-0 pointer-events-none z-20 will-change-transform"
-                >
-                  {/* Top Left Live Activity Badge */}
-                  <div className="absolute top-3 left-3 flex items-center gap-2 px-2.5 py-1 rounded-lg bg-obsidian-dark/90 border border-gold/20 text-[11px] text-cream backdrop-blur-sm shadow-md">
-                    <span className="w-2 h-2 rounded-full bg-potion-emerald animate-pulse" />
-                    <span>Block B • Bartered Drafter at 2 AM</span>
-                  </div>
-
-                  {/* Top Right Circulation Badge */}
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-obsidian-dark/90 border border-coven/30 text-[11px] text-coven-light backdrop-blur-sm shadow-md">
-                    <BookOpen className="w-3 h-3 text-gold" />
-                    <span>32 Relics in Circulation</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer Detail: Architectural Credential Seal */}
-              <div className="mt-5 p-3.5 rounded-2xl bg-gradient-to-r from-obsidian-surface via-obsidian-surface to-coven/15 border border-gold/20 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gold/15 border border-gold/30 flex items-center justify-center text-gold shrink-0">
-                  <span className="text-sm font-cinzel font-bold">🏛️</span>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs font-bold text-cream font-cinzel tracking-wide">
-                    Passed Down Through 4 Batches
-                  </span>
-                  <span className="text-[11px] text-lavender-muted font-medium">
-                    Keep your room clutter-free. Save ₹10,000 every semester.
-                  </span>
-                </div>
-              </div>
-            </div>
+      {/* ============================================================== */}
+      {/* 4. PROMINENT MAIN CINEMATIC HERO COMPOSITION */}
+      {/* ============================================================== */}
+      <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-32 sm:pt-36 lg:pt-40 pb-12 flex flex-col items-center justify-center my-auto space-y-7 sm:space-y-8">
+        
+        {/* Uppercase Introductory Label Above the Heading */}
+        <div ref={labelRef} className="inline-flex items-center">
+          <div className="inline-flex items-center gap-2.5 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-obsidian-surface/80 border border-gold/40 text-gold text-[10px] sm:text-xs font-cinzel font-bold tracking-[0.25em] sm:tracking-[0.3em] uppercase backdrop-blur-md shadow-gold-glow">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold-bright animate-ping" />
+            <span>AN UNTOLD NOCTURNAL CAMPUS ARCHIVE • 1,200+ RELICS PRESERVED</span>
           </div>
+        </div>
+
+        {/* Monumental Cinematic Main Heading */}
+        <div className="relative max-w-4xl mx-auto">
+          <h1
+            ref={headlineRef}
+            className="font-cinzel text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold text-cream tracking-tight leading-[1.06] select-none"
+            style={{ perspective: 1000 }}
+          >
+            <span className="headline-line block drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
+              TRADE YOUR RELICS.
+            </span>
+            <span className="headline-line relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-gold-bright via-gold to-potion-gold drop-shadow-[0_4px_30px_rgba(197,160,89,0.35)] mt-1 sm:mt-2">
+              SURVIVE THE SEMESTER.
+              {/* Flying Bat Accent perched overhead */}
+              <span className="hidden sm:inline-block absolute -top-8 -right-10 text-cream/70 select-none pointer-events-none drop-shadow-[0_2px_12px_rgba(197,160,89,0.6)]">
+                <SpookyBat size={42} />
+              </span>
+            </span>
+          </h1>
+        </div>
+
+        {/* Short, Emotionally Engaging Description */}
+        <p
+          ref={descRef}
+          className="max-w-2xl mx-auto text-sm sm:text-base md:text-lg text-cream/90 font-normal leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.85)]"
+        >
+          When midnight descends across the hostel wings, no currency changes hands. Barter
+          scientific calculators, engineering drafters, midnight induction kettles, and sacred handwritten
+          exam notes directly with fellow scholars before the final hour.
+        </p>
+
+        {/* Two Cinematic CTA Buttons with Elegant Magnetic Physics */}
+        <div
+          ref={ctaRef}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 w-full sm:w-auto"
+        >
+          {/* Primary CTA: EXPLORE EXPERIENCES */}
+          <Magnetic strength={0.8}>
+            <button
+              onClick={onExploreClick}
+              className="w-full sm:w-auto px-8 sm:px-9 py-4 rounded-full bg-gradient-to-r from-gold via-gold-bright to-gold-dark text-obsidian font-cinzel font-bold text-xs uppercase tracking-[0.2em] shadow-gold-glow hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 group relative overflow-hidden"
+            >
+              <span>EXPLORE EXPERIENCES</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </Magnetic>
+
+          {/* Secondary CTA: BOOK YOUR EXPERIENCE */}
+          <Magnetic strength={0.8}>
+            <button
+              onClick={onBrewClick}
+              className="w-full sm:w-auto px-8 sm:px-9 py-4 rounded-full bg-obsidian-dark/75 backdrop-blur-md border border-gold/40 hover:border-gold hover:bg-gold/15 text-gold-bright font-cinzel font-bold text-xs uppercase tracking-[0.2em] shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2.5 group"
+            >
+              <PlusCircle className="w-4 h-4 text-gold group-hover:rotate-90 transition-transform duration-300" />
+              <span>BOOK YOUR EXPERIENCE</span>
+            </button>
+          </Magnetic>
+
+          {/* Minigame Quick Trigger */}
+          {onOpenOuija && (
+            <Magnetic strength={0.6}>
+              <button
+                onClick={onOpenOuija}
+                className="w-full sm:w-auto px-5 py-4 rounded-full bg-obsidian-surface/60 border border-coven/40 text-gold-bright hover:bg-gold/10 font-cinzel text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 backdrop-blur-sm"
+                title="Summon the Spirit Oracle for Room Predictions"
+              >
+                <Dices className="w-4 h-4 text-gold" />
+                <span>Spirit Oracle</span>
+              </button>
+            </Magnetic>
+          )}
+        </div>
+
+        {/* Social Proof & Accreditation Band */}
+        <div
+          ref={trustRef}
+          className="pt-1 flex flex-wrap items-center justify-center gap-5 sm:gap-8 text-xs text-lavender-muted/90"
+        >
+          <div className="flex items-center gap-1.5 text-gold font-cinzel font-semibold">
+            <div className="flex items-center text-gold">
+              <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+              <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+              <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+              <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+              <Star className="w-3.5 h-3.5 fill-gold text-gold" />
+            </div>
+            <span className="tracking-wide">4.9 / 5 by 600+ Students</span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <Shield className="w-4 h-4 text-gold" />
+            <span className="font-medium text-cream/80">100% University Verified</span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
+            <span className="font-medium text-cream/80">Zero Currency Protocol Active</span>
+          </div>
+        </div>
+      </div>
+
+      {/* ============================================================== */}
+      {/* 5. SMALL ANIMATED SCROLL INDICATOR AT THE BOTTOM */}
+      {/* ============================================================== */}
+      <div
+        ref={scrollIndicatorRef}
+        onClick={onExploreClick}
+        className="relative z-20 pb-8 flex flex-col items-center gap-2 cursor-pointer group"
+      >
+        <span className="text-[10px] font-cinzel tracking-[0.3em] text-gold/75 group-hover:text-gold uppercase transition-colors">
+          SCROLL TO EXPLORE
+        </span>
+        <div className="w-5 h-8 sm:w-6 sm:h-9 rounded-full border border-gold/40 flex justify-center pt-1.5 group-hover:border-gold transition-colors">
+          <div className="w-1 h-2 rounded-full bg-gold animate-bounce" />
         </div>
       </div>
     </section>

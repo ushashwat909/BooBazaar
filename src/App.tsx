@@ -233,7 +233,7 @@ const MainApp: React.FC = () => {
         </div>
       )}
 
-      {/* Top Sticky Navbar */}
+      {/* Top Fixed Transparent Navbar with on-scroll transition to solid dark */}
       <Navbar
         onSearchClick={() => {
           const el = document.getElementById('explore');
@@ -247,18 +247,18 @@ const MainApp: React.FC = () => {
         setActiveTab={setActiveNavTab}
       />
 
+      {/* Full-Screen Edge-to-Edge Cinematic Hero Section */}
+      <Hero
+        onExploreClick={() => {
+          const el = document.getElementById('explore');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onBrewClick={() => openBrewModal('offer')}
+        onOpenOuija={() => setIsOuijaOpen(true)}
+      />
+
       {/* Main Content Container */}
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        {/* Hero Section */}
-        <Hero
-          onExploreClick={() => {
-            const el = document.getElementById('explore');
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onBrewClick={() => openBrewModal('offer')}
-          onOpenOuija={() => setIsOuijaOpen(true)}
-        />
-
         {/* 6 Category Filter Row */}
         <div className="my-8">
           <CategoryFilter

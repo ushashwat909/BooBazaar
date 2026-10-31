@@ -121,3 +121,4 @@ export const HeroHeadline: React.FC = () => {
     </div>
   );
 };
+

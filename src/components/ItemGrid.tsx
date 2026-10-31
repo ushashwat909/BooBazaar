@@ -11,14 +11,15 @@ import {
   Gift, 
   Scroll, 
   Package, 
-  HelpCircle,
-  Tag,
-  X,
-  PlusCircle,
-  CheckCircle2,
-  Handshake
+  HelpCircle, 
+  Tag, 
+  X, 
+  PlusCircle, 
+  CheckCircle2, 
+  Handshake 
 } from 'lucide-react';
 import { CATEGORIES } from './CategoryFilter';
+import { Magnetic } from './ui/Magnetic';
 
 interface ItemGridProps {
   items: Item[];
@@ -150,39 +151,43 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
 
         {/* Tab Switch: Treasures vs Seeking Spells */}
         <div className="p-1 rounded-2xl bg-obsidian-surface border border-pumpkin/20 flex items-center shrink-0">
-          <button
-            onClick={() => onSelectFeedTab('treasures')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
-              selectedFeedTab === 'treasures'
-                ? 'bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark shadow-potion-glow'
-                : 'text-lavender-muted hover:text-cream'
-            }`}
-          >
-            <Package className="w-3.5 h-3.5" />
-            <span>Pantry Treasures</span>
-            <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
-              selectedFeedTab === 'treasures' ? 'bg-obsidian-dark text-pumpkin' : 'bg-white/10 text-cream'
-            }`}>
-              {availableCount}
-            </span>
-          </button>
+          <Magnetic strength={0.4}>
+            <button
+              onClick={() => onSelectFeedTab('treasures')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                selectedFeedTab === 'treasures'
+                  ? 'bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark shadow-potion-glow'
+                  : 'text-lavender-muted hover:text-cream'
+              }`}
+            >
+              <Package className="w-3.5 h-3.5" />
+              <span>Pantry Treasures</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
+                selectedFeedTab === 'treasures' ? 'bg-obsidian-dark text-pumpkin' : 'bg-white/10 text-cream'
+              }`}>
+                {availableCount}
+              </span>
+            </button>
+          </Magnetic>
 
-          <button
-            onClick={() => onSelectFeedTab('seeking')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
-              selectedFeedTab === 'seeking'
-                ? 'bg-gradient-to-r from-coven to-coven-light text-cream shadow-coven-glow'
-                : 'text-lavender-muted hover:text-cream'
-            }`}
-          >
-            <Scroll className="w-3.5 h-3.5" />
-            <span>Seeking Spells</span>
-            <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
-              selectedFeedTab === 'seeking' ? 'bg-white text-coven-dark' : 'bg-white/10 text-cream'
-            }`}>
-              {wantedCount}
-            </span>
-          </button>
+          <Magnetic strength={0.4}>
+            <button
+              onClick={() => onSelectFeedTab('seeking')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                selectedFeedTab === 'seeking'
+                  ? 'bg-gradient-to-r from-coven to-coven-light text-cream shadow-coven-glow'
+                  : 'text-lavender-muted hover:text-cream'
+              }`}
+            >
+              <Scroll className="w-3.5 h-3.5" />
+              <span>Seeking Spells</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-extrabold ${
+                selectedFeedTab === 'seeking' ? 'bg-white text-coven-dark' : 'bg-white/10 text-cream'
+              }`}>
+                {wantedCount}
+              </span>
+            </button>
+          </Magnetic>
         </div>
       </div>
 
@@ -229,13 +234,15 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
           </div>
 
           {/* Quick Post CTA Button */}
-          <button
-            onClick={onPostClick}
-            className="px-4 py-2.5 rounded-2xl bg-pumpkin/15 border border-pumpkin/30 hover:bg-pumpkin hover:text-obsidian-dark text-pumpkin text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0"
-          >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span>{selectedFeedTab === 'treasures' ? 'Brew Listing' : 'Post Request'}</span>
-          </button>
+          <Magnetic strength={0.7}>
+            <button
+              onClick={onPostClick}
+              className="px-4 py-2.5 rounded-2xl bg-pumpkin/15 border border-pumpkin/30 hover:bg-pumpkin hover:text-obsidian-dark text-pumpkin text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0"
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>{selectedFeedTab === 'treasures' ? 'Brew Listing' : 'Post Request'}</span>
+            </button>
+          </Magnetic>
         </div>
 
         {/* Bottom Control Line: Category Filter Pills */}
@@ -290,22 +297,26 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
               : `No items matched your current hostel block and category filters.`}
           </p>
           <div className="flex items-center justify-center gap-3 pt-2">
-            <button
-              onClick={() => {
-                onSelectBlock('All');
-                onSelectCategory('All');
-                setSearchQuery('');
-              }}
-              className="px-5 py-2.5 rounded-full bg-pumpkin text-obsidian-dark font-bold text-xs uppercase tracking-wider shadow-potion-glow hover:scale-105 transition-all"
-            >
-              Reset Filters
-            </button>
-            <button
-              onClick={onPostClick}
-              className="px-5 py-2.5 rounded-full bg-coven/20 border border-coven/40 text-cream font-bold text-xs uppercase tracking-wider hover:bg-coven/30 transition-all"
-            >
-              {selectedFeedTab === 'treasures' ? 'Brew an Item' : 'Post a Request'}
-            </button>
+            <Magnetic strength={0.8}>
+              <button
+                onClick={() => {
+                  onSelectBlock('All');
+                  onSelectCategory('All');
+                  setSearchQuery('');
+                }}
+                className="px-5 py-2.5 rounded-full bg-pumpkin text-obsidian-dark font-bold text-xs uppercase tracking-wider shadow-potion-glow hover:scale-105 transition-all"
+              >
+                Reset Filters
+              </button>
+            </Magnetic>
+            <Magnetic strength={0.8}>
+              <button
+                onClick={onPostClick}
+                className="px-5 py-2.5 rounded-full bg-coven/20 border border-coven/40 text-cream font-bold text-xs uppercase tracking-wider hover:bg-coven/30 transition-all"
+              >
+                {selectedFeedTab === 'treasures' ? 'Brew an Item' : 'Post a Request'}
+              </button>
+            </Magnetic>
           </div>
         </div>
       ) : (
@@ -317,7 +328,7 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
             return (
               <div
                 key={item.id}
-                className={`group relative rounded-3xl bg-obsidian-card border transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                className={`interactive-card group relative rounded-3xl bg-obsidian-card border transition-all duration-300 flex flex-col justify-between overflow-hidden ${
                   isWanted
                     ? 'border-coven/35 hover:border-coven hover:shadow-coven-glow'
                     : 'card-border-subtle hover:border-pumpkin/50 hover:shadow-potion-glow'
@@ -336,17 +347,19 @@ export const ItemGrid: React.FC<ItemGridProps> = ({
                   <div className="absolute inset-0 bg-gradient-to-t from-obsidian-card via-transparent to-black/35 pointer-events-none" />
 
                   {/* Heart Favorite Button */}
-                  <button
-                    onClick={(e) => toggleFavorite(item.id, e)}
-                    className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-obsidian/75 backdrop-blur-md border border-white/10 flex items-center justify-center text-cream hover:scale-110 active:scale-95 transition-all z-10"
-                    title={isFav ? "Saved to your potions" : "Save item"}
-                  >
-                    <Heart
-                      className={`w-4 h-4 transition-colors ${
-                        isFav ? 'fill-rose-500 text-rose-500' : 'text-cream/80'
-                      }`}
-                    />
-                  </button>
+                  <Magnetic strength={0.6} className="absolute top-3.5 right-3.5 z-10">
+                    <button
+                      onClick={(e) => toggleFavorite(item.id, e)}
+                      className="w-8 h-8 rounded-full bg-obsidian/75 backdrop-blur-md border border-white/10 flex items-center justify-center text-cream hover:scale-110 active:scale-95 transition-all"
+                      title={isFav ? "Saved to your potions" : "Save item"}
+                    >
+                      <Heart
+                        className={`w-4 h-4 transition-colors ${
+                          isFav ? 'fill-rose-500 text-rose-500' : 'text-cream/80'
+                        }`}
+                      />
+                    </button>
+                  </Magnetic>
 
                   {/* Top-Left Category & Status Pills */}
                   <div className="absolute top-3.5 left-3.5 flex flex-wrap items-center gap-1.5 z-10">

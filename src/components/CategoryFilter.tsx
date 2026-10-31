@@ -9,6 +9,7 @@ import {
   Gift, 
   Check 
 } from 'lucide-react';
+import { Magnetic } from './ui/Magnetic';
 
 interface CategoryFilterProps {
   selectedCategory: ItemCategory | 'All';
@@ -109,7 +110,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
             <button
               key={cat.id}
               onClick={() => onSelectCategory(isSelected ? 'All' : cat.id)}
-              className={`relative text-left p-3.5 sm:p-4 rounded-2xl border transition-all duration-300 group flex flex-col justify-between overflow-hidden ${
+              className={`interactive-card relative text-left p-3.5 sm:p-4 rounded-2xl border transition-all duration-300 group flex flex-col justify-between overflow-hidden ${
                 isSelected
                   ? 'bg-gradient-to-br from-pumpkin/20 via-obsidian-surface to-coven/20 border-pumpkin shadow-potion-glow scale-[1.02]'
                   : 'bg-obsidian-card border-pumpkin/15 hover:border-pumpkin/40 hover:bg-obsidian-cardHover hover:translate-y-[-2px]'
@@ -122,15 +123,17 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 </span>
               )}
 
-              {/* Icon Container */}
+              {/* Icon Container with Magnetic touch */}
               <div className="flex items-center justify-between w-full mb-3">
-                <div
-                  className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
-                    isSelected ? 'bg-pumpkin text-obsidian' : 'bg-white/5 ' + cat.iconColor
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                </div>
+                <Magnetic strength={0.5}>
+                  <div
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
+                      isSelected ? 'bg-pumpkin text-obsidian' : 'bg-white/5 ' + cat.iconColor
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </div>
+                </Magnetic>
 
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white/5 text-lavender-muted border border-white/5">
                   {count} {count === 1 ? 'item' : 'items'}
@@ -155,4 +158,3 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     </div>
   );
 };
-

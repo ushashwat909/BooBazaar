@@ -14,6 +14,19 @@
   }
 }
 
+/* GPU Hardware Acceleration Utilities for Fluid Animations */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.interactive-card {
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
 /* Subtle glowing apothecary effects without clutter */
 .glow-pumpkin {
   box-shadow: 0 0 20px -3px rgba(255, 138, 43, 0.35);
@@ -49,4 +62,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #FF8A2B;
 }
-

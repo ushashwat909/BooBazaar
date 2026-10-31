@@ -47,6 +47,8 @@ export interface Conversation {
   item?: Item;
   seller?: User;
   buyer?: User;
+  last_message?: string;
+  last_message_at?: string;
 }
 
 export interface Message {
@@ -54,7 +56,6 @@ export interface Message {
   conversation_id: string;
   sender_id: string;
   content: string;
-  offer_tag?: 'Counter Offer' | 'Deal Accepted' | 'Snack Trade' | 'Free Claim' | null;
+  offer_tag?: 'Counter Offer' | 'Deal Accepted' | 'Snack Trade' | 'Free Claim' | 'System' | 'Pickup' | 'Availability' | string | null;
   created_at?: string;
 }
-

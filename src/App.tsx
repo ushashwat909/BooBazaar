@@ -11,6 +11,7 @@ import { BrewListingModal } from './components/BrewListingModal';
 import { ChatModal } from './components/ChatModal';
 import { Footer } from './components/Footer';
 import { AuthPage } from './pages/AuthPage';
+import { AuraCursor } from './components/ui/AuraCursor';
 import { Item, ItemCategory, HostelBlock } from './types';
 import { INITIAL_ITEMS, supabase } from './lib/supabase';
 import { Sparkles } from 'lucide-react';
@@ -39,10 +40,12 @@ const MainApp: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeNavTab, setActiveNavTab] = useState('home');
 
-  // Modals
+  // Modals & Chat Drawer State
   const [isBrewModalOpen, setIsBrewModalOpen] = useState(false);
   const [brewModalMode, setBrewModalMode] = useState<'offer' | 'request'>('offer');
+  const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
   const [activeChatItem, setActiveChatItem] = useState<Item | null>(null);
+  const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Sync with browser back/forward or hash changes
@@ -110,26 +113,42 @@ const MainApp: React.FC = () => {
     setIsBrewModalOpen(true);
   };
 
+  const handleOpenItemChat = (item: Item) => {
+    if (!currentUser) {
+      openAuthModal('signin');
+      return;
+    }
+    setActiveChatItem(item);
+    setActiveConversationId(null);
+    setIsChatDrawerOpen(true);
+  };
+
+  const handleOpenActiveChats = () => {
+    if (!currentUser) {
+      openAuthModal('signin');
+      return;
+    }
+    setActiveChatItem(items[0] || null);
+    setActiveConversationId('conv-111');
+    setIsChatDrawerOpen(true);
+  };
+
   const handleItemAdded = async (newItem: Item) => {
-    // Put newly created item immediately at the top of the feed
     const updated = [newItem, ...items];
     setItems(updated);
     localStorage.setItem('potion_pantry_items', JSON.stringify(updated));
 
-    // Automatically switch to the relevant tab so the user sees their new item right away
     if (newItem.listing_type === 'Wanted') {
       setSelectedFeedTab('seeking');
     } else {
       setSelectedFeedTab('treasures');
     }
 
-    // Scroll to explore feed
     const el = document.getElementById('explore');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Attempt Supabase insert in background
     try {
       await supabase.from('items').insert([
         {
@@ -152,7 +171,16 @@ const MainApp: React.FC = () => {
     showToast(`✨ "${newItem.title}" brewed successfully to ${newItem.hostel_block}!`);
   };
 
-  // Compute category counts based on current feed tab
+  const handleItemClaimed = (claimedItemId: string) => {
+    const updated = items.map(item => 
+      item.id === claimedItemId ? { ...item, status: 'Claimed' as const } : item
+    );
+    setItems(updated);
+    localStorage.setItem('potion_pantry_items', JSON.stringify(updated));
+    showToast('🎉 Item marked as Claimed! +25 Karma points credited.');
+  };
+
+  // Compute category counts
   const categoryCounts = items.reduce((acc, item) => {
     acc[item.category] = (acc[item.category] || 0) + 1;
     return acc;
@@ -161,17 +189,23 @@ const MainApp: React.FC = () => {
   // Standalone /auth page view
   if (currentRoute === 'auth') {
     return (
-      <AuthPage 
-        onBackToPantry={() => {
-          window.location.hash = '';
-          setCurrentRoute('home');
-        }} 
-      />
+      <>
+        <AuraCursor />
+        <AuthPage 
+          onBackToPantry={() => {
+            window.location.hash = '';
+            setCurrentRoute('home');
+          }} 
+        />
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-cream">
+    <div className="min-h-screen flex flex-col bg-obsidian text-cream relative">
+      {/* Ambient Apothecary Aura Cursor & Spotlight Glow */}
+      <AuraCursor />
+
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-2xl bg-gradient-to-r from-pumpkin to-pumpkin-dark text-obsidian-dark font-bold text-xs shadow-potion-glow border border-pumpkin-light flex items-center gap-2 animate-in slide-in-from-bottom duration-300">
@@ -188,11 +222,7 @@ const MainApp: React.FC = () => {
         }}
         onPostClick={() => openBrewModal('offer')}
         onSeekingSpellsClick={handleSeekingSpellsNavClick}
-        onActiveChatsClick={() => {
-          if (items.length > 0) {
-            setActiveChatItem(items[0]);
-          }
-        }}
+        onActiveChatsClick={handleOpenActiveChats}
         activeTab={activeNavTab}
         setActiveTab={setActiveNavTab}
       />
@@ -231,7 +261,7 @@ const MainApp: React.FC = () => {
           setSearchQuery={setSearchQuery}
           selectedFeedTab={selectedFeedTab}
           onSelectFeedTab={setSelectedFeedTab}
-          onItemChat={(item) => setActiveChatItem(item)}
+          onItemChat={handleOpenItemChat}
           onPostClick={() => openBrewModal(selectedFeedTab === 'seeking' ? 'request' : 'offer')}
         />
 
@@ -242,7 +272,7 @@ const MainApp: React.FC = () => {
       {/* Footer */}
       <Footer />
 
-      {/* Modals */}
+      {/* Modals & Real-Time Slide-over Drawer */}
       <AuthModal />
       <BrewListingModal
         isOpen={isBrewModalOpen}
@@ -251,8 +281,11 @@ const MainApp: React.FC = () => {
         defaultMode={brewModalMode}
       />
       <ChatModal
-        item={activeChatItem}
-        onClose={() => setActiveChatItem(null)}
+        isOpen={isChatDrawerOpen}
+        onClose={() => setIsChatDrawerOpen(false)}
+        targetItem={activeChatItem}
+        activeConversationId={activeConversationId}
+        onItemClaimed={handleItemClaimed}
       />
     </div>
   );

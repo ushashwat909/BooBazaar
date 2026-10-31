@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Item, User } from '../types';
+import { Item, User, Conversation, Message } from '../types';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://ohxedaoaarwrzqrkhnqz.supabase.co';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy';
@@ -122,7 +122,6 @@ export const INITIAL_ITEMS: Item[] = [
     created_at: new Date(Date.now() - 3600000 * 24).toISOString(),
     owner: INITIAL_USERS[1],
   },
-  // Seeking Spells (Wanted Requests by Students)
   {
     id: 'w4444444-4444-4444-4444-444444444441',
     owner_id: 'a1111111-1111-1111-1111-111111111111',
@@ -154,6 +153,89 @@ export const INITIAL_ITEMS: Item[] = [
     owner: INITIAL_USERS[1],
   }
 ];
+
+// Initial Seed Conversations
+export const INITIAL_CONVERSATIONS: Conversation[] = [
+  {
+    id: 'conv-111',
+    item_id: 'c3333333-3333-3333-3333-333333333331',
+    buyer_id: 'b2222222-2222-2222-2222-222222222222',
+    seller_id: 'a1111111-1111-1111-1111-111111111111',
+    created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    item: INITIAL_ITEMS[0],
+    seller: INITIAL_USERS[0],
+    buyer: INITIAL_USERS[1],
+    last_message: 'Deal! 2 Maggi packets or semester notes work great.',
+    last_message_at: '20 mins ago'
+  },
+  {
+    id: 'conv-222',
+    item_id: 'c3333333-3333-3333-3333-333333333332',
+    buyer_id: 'a1111111-1111-1111-1111-111111111111',
+    seller_id: 'b2222222-2222-2222-2222-222222222222',
+    created_at: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
+    item: INITIAL_ITEMS[1],
+    seller: INITIAL_USERS[1],
+    buyer: INITIAL_USERS[0],
+    last_message: 'Hey, are these headphones still available for swap?',
+    last_message_at: '45 mins ago'
+  }
+];
+
+export const INITIAL_MESSAGES: Record<string, Message[]> = {
+  'conv-111': [
+    {
+      id: 'msg-1',
+      conversation_id: 'conv-111',
+      sender_id: 'b2222222-2222-2222-2222-222222222222',
+      content: 'Hey Aarav! Saw your Engineering Mathematics textbook. Does it include the Unit 4 Laplace transform formulas?',
+      offer_tag: 'Availability',
+      created_at: new Date(Date.now() - 1000 * 60 * 25).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    {
+      id: 'msg-2',
+      conversation_id: 'conv-111',
+      sender_id: 'a1111111-1111-1111-1111-111111111111',
+      content: 'Yes Meera! It has all highlighted theorem summaries and handwritten formula bookmarks glued inside.',
+      offer_tag: null,
+      created_at: new Date(Date.now() - 1000 * 60 * 23).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    {
+      id: 'msg-3',
+      conversation_id: 'conv-111',
+      sender_id: 'b2222222-2222-2222-2222-222222222222',
+      content: 'Awesome! Can I trade for 2x Special Masala Maggi + Nescafe coffee sachets?',
+      offer_tag: 'Snack Trade',
+      created_at: new Date(Date.now() - 1000 * 60 * 21).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    {
+      id: 'msg-4',
+      conversation_id: 'conv-111',
+      sender_id: 'a1111111-1111-1111-1111-111111111111',
+      content: 'Deal! 2 Maggi packets or semester notes work great for me. I am in Block B Room 204.',
+      offer_tag: 'Deal Accepted',
+      created_at: new Date(Date.now() - 1000 * 60 * 20).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
+  ],
+  'conv-222': [
+    {
+      id: 'msg-201',
+      conversation_id: 'conv-222',
+      sender_id: 'a1111111-1111-1111-1111-111111111111',
+      content: 'Hey Meera, are these noise-cancelling headphones still available for swap?',
+      offer_tag: 'Availability',
+      created_at: new Date(Date.now() - 1000 * 60 * 45).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    },
+    {
+      id: 'msg-202',
+      conversation_id: 'conv-222',
+      sender_id: 'b2222222-2222-2222-2222-222222222222',
+      content: 'Yes Aarav! Battery is fully charged. What study items or snacks do you have in Block B?',
+      offer_tag: null,
+      created_at: new Date(Date.now() - 1000 * 60 * 40).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    }
+  ]
+};
 
 // Helper: Upload photo to Supabase storage bucket `item-photos`
 export const uploadItemPhoto = async (file: File): Promise<string> => {
